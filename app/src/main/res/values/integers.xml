@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="cantidad_clientes_por_profe">2</integer>
+    <integer name="cantidad_profes">2</integer>
+    <integer name="cantidad_clientes_lista_de_espera">2</integer>
+</resources>

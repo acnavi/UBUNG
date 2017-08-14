@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+
+
+android:orientation="horizontal"
+    >
+
+    <Button
+        android:id="@+id/boton_inic_sec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/caja_transparente"
+        android:onClick="hicieronClick"
+        android:text="Iniciar Secion"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/boton_crear_cue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/caja_transparente"
+        android:text="Registrarse"
+        android:textColor="#FFFFFF"
+        android:onClick="hicieronClick"/>
+
+</LinearLayout>

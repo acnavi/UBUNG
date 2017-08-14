@@ -1,0 +1,103 @@
+<resources>
+    <!-- Aplicacion-->
+    <string name="app_name">UBUNG</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="action_settings">Settings</string>
+    <!-- Inicio de Sesion -->
+    <string name="registrarse_correo_label">Correo:</string>
+    <string name="registrarse_genero_label">Genero:</string>
+    <string name="registrarse_telefono_label">Telefono:</string>
+    <string name="registrarse_contrasena_label">Contraseña:</string>
+    <string name="registrarse_nombre_label">Nombre:</string>
+    <string name="registrarse_contrasena2">Repite la contraseña:</string>
+    <string name="registrarse_fecha_de_nacimiento_label">Fecha de nacimiento:</string>
+    <string name="registrarse_foto">Foto de perfil: </string>
+    <string name="registrarse_genero_hombre">Hombre</string>
+    <string name="registrarse_genero_mujer">Mujer</string>
+
+    <string name="registrarse_texto_boton_inic_sec">Inicia Seccion</string>
+    <string name="registrarse_texto_boton_regis">Registrarse</string>
+    <string name="registrarse_texto_boton_ya_tienes_cuenta">Ya tengo cuenta</string>
+    <string name="registrarse_texto_boton_siguiente">Siguiente</string>
+    <!-- Inicio de Sesion -->
+
+    <!-- Utiles-->
+    <string name="usuario">dsfjlskdjf</string>
+    <!-- Utiles-->
+    <!-- Solicitudes clientes -->
+    <string name="soli_botonAceptar">Aceptar</string>
+    <string name="soli_botonRechazar">X</string>
+    <!-- Solicitudes clientes -->
+
+    <!-- menu lateral/ drawer-->
+    <string name="cerrar_sec">Cerrar Sesión</string>
+    <!-- menu lateral/ drawer-->
+
+    <!-- Aplicacion-->
+
+    <!--Basededatos-->
+
+    <string name="nomble_clasesFDB" translatable="false">clases</string>
+
+    <string name="db_clases_profe_poner_numero" translatable="false">profe</string>
+
+    <string name="db_clases_cliente_poner_numero_profe_y_cliente" translatable="false">cliente</string>
+    <string name="db_clases_fecha_y_hora" translatable="false">fecha-hora</string>
+    <string name="db_pilates_oFisio_poner_numero" translatable="false">pilatesofisio</string>
+    <string name="db_pilates_oFisio_pilates" translatable="false">pilates</string>
+    <string name="db_pilates_oFisio_fisio" translatable="false">fisio</string>
+
+
+    <string name="db_clases_lista_de_espera" translatable="false">lista_de_espera</string>
+
+
+    <string name="nomble_paquetesFDB" translatable="false">paquetes</string>
+
+    <string name="nombre_solicitudedFDB" translatable="false">solicitudes</string>
+    <string name="nombre_clienteFDB" translatable="false">clientes</string>
+    <string name="nomble_profesoresFDB" translatable="false">profesores</string>
+
+    <string name="db_profesores_poderSupremo" translatable="false">podersupremo</string>
+
+
+    <string name="db_correo" translatable="false">correo</string>
+    <string name="db_sol_contrasena" translatable="false">contrasena</string>
+    <string name="db_cumpleanos" translatable="false">hbd</string>
+    <string name="db_genero" translatable="false">masofem</string>
+    <string name="db_peso" translatable="false">peso</string>
+    <string name="db_direccion" translatable="false">direccion</string>
+    <string name="db_seguro_medico" translatable="false">seguro</string>
+    <string name="db_tel" translatable="false">tel</string>
+    <string name="db_nombre" translatable="false">nombre</string>
+    <string name="db_foto" translatable="false">foto</string>
+    <string name="db_clientes_paquete" translatable="false">paquete</string>
+    <string name="db_comentarios" translatable="false">comentarios</string>
+
+
+    <!--Basededatos-->
+
+    <!--Estados clase clientes-->
+    <string name="ecc_ocupado" translatable="false">ocupado</string>
+    <string name="ecc_disponible" translatable="false">disponible</string>
+    <string name="ecc_lista_deEspera" translatable="false">lista</string>
+    <string name="ecc_reservada" translatable="false">reservada</string>
+    <string name="ecc_not_available" translatable="false">not available</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Estados clase clientes-->
+
+    <!--Dias calendario-->
+    <string name="lunes">lun.</string>
+    <string name="martes">mar.</string>
+    <string name="miercoles">mier.</string>
+    <string name="jueves">jue.</string>
+    <string name="viernes">vie.</string>
+    <string name="sabado">sab.</string>
+    <!--Dias-->
+</resources>

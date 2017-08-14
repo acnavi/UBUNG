@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/holder_solicitud_foto"/>
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/holder_solicitud_tv_nombre"
+        tools:text="Carolina Poveda"
+        android:layout_gravity="start|center_vertical"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical|end">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/holder_solicitud_boton_aceptar"
+            android:layout_weight="2"
+            android:text="@string/soli_botonAceptar"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/holder_solicitud_boton_rechazar"
+            android:layout_weight="1"
+            android:text="@string/soli_botonRechazar"/>
+    </LinearLayout>
+
+</FrameLayout>

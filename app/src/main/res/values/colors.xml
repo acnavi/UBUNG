@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="moradoProvicional">#7c01e6</color>
+    <color name="blanco_tranparentoso">#80FFFFFF</color>
+    <color name="blanco">#FFFFFF</color>
+
+    <!--Colores casillas clases-->
+    <!--TODO: cambiar los colores de abajo-->
+    <color name="clase_clientes_ocupada">#FFFFFF</color>
+    <color name="clase_clientes_disponible">#FFFFFF</color>
+    <color name="clase_clientes_lista_de_espera">#FFFFFF</color>
+    <color name="clase_clientes_reservada">#FFFFFF</color>
+    <color name="clase_not_available">#FFFFFF</color>
+    <color name="clase_profesores_hay_que_ir">#FFFFFF</color>
+    <color name="clase_profesores_NO_hay_que_ir">#FFFFFF</color>
+    <color name="clase_marce_abierta_sin_nadie">#FFFFFF</color>
+    <color name="clase_marce_abierta_con_problemas">#FFFFFF</color>
+    <color name="clase_marce_increible">#FFFFFF</color>
+
+    <!--Colores casillas clases-->
+</resources>

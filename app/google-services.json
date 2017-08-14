@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "539271845073",
+    "firebase_url": "https://ubung-4f2c1.firebaseio.com",
+    "project_id": "ubung-4f2c1",
+    "storage_bucket": "ubung-4f2c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539271845073:android:82756593d6c782a7",
+        "android_client_info": {
+          "package_name": "ubung.co.ubung"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539271845073-2geq662ukn11sdsbe2h8c3ogqs26um9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ubung.co.ubung",
+            "certificate_hash": "9856b80d82888486f1ab61c4ae74472d667175da"
+          }
+        },
+        {
+          "client_id": "539271845073-psjqemrv83t13lim5ngl1im9nvhm3tka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwqjXk6TaNmrFrUhjFZhfU1IOEgPGae_8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539271845073-psjqemrv83t13lim5ngl1im9nvhm3tka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
