@@ -35,7 +35,8 @@
             android:configChanges="orientation"
             android:parentActivityName=".Calendario"
             android:screenOrientation="portrait" />
-        <activity android:name=".SolicitudEnviadaActivity"></activity>
+        <activity android:name=".SolicitudEnviadaActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

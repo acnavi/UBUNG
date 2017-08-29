@@ -100,4 +100,9 @@
     <string name="viernes">vie.</string>
     <string name="sabado">sab.</string>
     <!--Dias-->
+
+    <!--Cosas a traducir-->
+    <string name="problema_inic_secion_title">Inicio Secion</string>
+    <string name="problema_inic_secion_message">Hubo un problema al iniciar secion. Vuelve a intentarlo más tarde.</string>
+    <!--Cosas a traducir-->
 </resources>

@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -66,6 +68,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ubung.co.ubung.Utilidades.DatabaseManager;
+//TODO: RESOLVER EL PROBLEMADEL BOTON HACIA ATRAS.
 
 public class PreLoginActivity extends AppCompatActivity {
     private final static int INICIAL=0;
@@ -91,7 +94,12 @@ public class PreLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("EXIT", false)) {
+            finish();
+        }
+
         setContentView(R.layout.activity_pre_login);
+        findViewById(R.id.loading_thingi).setVisibility(View.VISIBLE);
         mAuth=FirebaseAuth.getInstance();
 
         solicitudesFotosStorage= FirebaseStorage.getInstance().getReference()
@@ -102,14 +110,16 @@ public class PreLoginActivity extends AppCompatActivity {
 
         dataBaseSupreme= FirebaseDatabase.getInstance().getReference();
 
-        mAuth.signOut();
-
 
         if(user!=null){
             lanzarAlgoDependiendoDelUsuario();
             Log.i(TAG,user.getEmail());
+            return;
 
         }
+
+        findViewById(R.id.loading_thingi).setVisibility(View.INVISIBLE);
+
 
 
         dataBase = dataBaseSupreme.child(getString(R.string.nombre_solicitudedFDB));
@@ -129,104 +139,125 @@ public class PreLoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        findViewById(R.id.loading_thingi).setVisibility(View.INVISIBLE);
+    }
+
     public void lanzarSolicitudEnviada(String uid){
+
         Intent i = new Intent(PreLoginActivity.this, SolicitudEnviadaActivity.class);
         i.putExtra(USUARIO_BUNDLE_KEY,uid);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
+
+    private void noEstaEnClientesBuscarEnProfesores(final String uid){
+        dataBaseSupreme.child(getString(R.string.nomble_profesoresFDB)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot hijo: dataSnapshot.getChildren()){
+                    if(hijo.getKey().equals(uid)){
+                        boolean esMarce= (boolean) hijo.child(getString(R.string.db_profesores_poderSupremo)).getValue();
+                        if(esMarce){
+                            lanzarCalendario(DatabaseManager.TipoAplicacion.MARCE);
+
+                        }
+                        else {
+                            lanzarCalendario(DatabaseManager.TipoAplicacion.PROFE);
+
+                        }
+                        return;
+                    }
+                }
+                huboUnProblemaAlIniciarSecion();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                huboUnProblemaAlIniciarSecion();
+            }
+        });
+    }
+
+
     /*
     Usar solo si se sabe que el usuario no es null.
      */
 
-    public void lanzarAlgoDependiendoDelUsuario(){
-        final String uid = user.getUid();
-        new AsyncTask<Void,Void,DatabaseManager.TipoAplicacion>(){
+    private void noEstaEnsolicitudesBuscarEnClientes(final String uid){
+        dataBaseSupreme.child(getString(R.string.nombre_clienteFDB)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot hijo: dataSnapshot.getChildren()){
+                    if(hijo.getKey().equals(uid)){
+                        lanzarCalendario(DatabaseManager.TipoAplicacion.CLIENTE);
+                        return;
+                    }
+
+                }
+                noEstaEnClientesBuscarEnProfesores(uid);
+
+            }
 
             @Override
-            protected DatabaseManager.TipoAplicacion doInBackground(Void... params) {
-                final DatabaseManager.TipoAplicacion[] aRetornar= new DatabaseManager.TipoAplicacion[1];
+            public void onCancelled(DatabaseError databaseError) {
 
-                FragmentoLoading.instantiate(PreLoginActivity.this,"hola");
+                huboUnProblemaAlIniciarSecion();
+            }
+        });
+    }
+    public void lanzarAlgoDependiendoDelUsuario(){
+        final String uid = user.getUid();
+        findViewById(R.id.loading_thingi).setVisibility(View.VISIBLE);
+
                 dataBaseSupreme.child(getString(R.string.nombre_solicitudedFDB)).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for(DataSnapshot hijo: dataSnapshot.getChildren()){
                             if(hijo.getKey().equals(uid)){
-//                                lanzarSolicitudEnviada(uid);
-                                aRetornar[0]= DatabaseManager.TipoAplicacion.CLIENTENOACEPTADO;
+
+                                lanzarSolicitudEnviada(uid);
+                                return;
                             }
                         }
+                        noEstaEnsolicitudesBuscarEnClientes(uid);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                dataBaseSupreme.child(getString(R.string.nomble_profesoresFDB)).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot hijo: dataSnapshot.getChildren()){
-                            if(hijo.getKey().equals(uid)){
-                                boolean esMarce= (boolean) hijo.child(getString(R.string.db_profesores_poderSupremo)).getValue();
-                                if(esMarce){
-//                                    lanzarCalendario(DatabaseManager.TipoAplicacion.MARCE);
-                                    aRetornar[0]= DatabaseManager.TipoAplicacion.MARCE;
-                                }
-                                else {
-//                                    lanzarCalendario(DatabaseManager.TipoAplicacion.PROFE);
-                                aRetornar[0]= DatabaseManager.TipoAplicacion.PROFE;
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
+                        if(databaseError.getCode()==DatabaseError.PERMISSION_DENIED) noEstaEnsolicitudesBuscarEnClientes(uid);
+                        else huboUnProblemaAlIniciarSecion();
                     }
                 });
 
-                dataBaseSupreme.child(getString(R.string.nombre_clienteFDB)).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot hijo: dataSnapshot.getChildren()){
-                            if(hijo.getKey().equals(uid))
-//                                lanzarCalendario(DatabaseManager.TipoAplicacion.CLIENTE);
-                        aRetornar[0]= DatabaseManager.TipoAplicacion.CLIENTE;
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-                return aRetornar[0];
-            }
-
-            @Override
-            protected void onPostExecute(DatabaseManager.TipoAplicacion tipoAplicacion) {
-                super.onPostExecute(tipoAplicacion);
-                if(tipoAplicacion==null) return;
-                else if(tipoAplicacion== DatabaseManager.TipoAplicacion.CLIENTENOACEPTADO){
-                    lanzarSolicitudEnviada(uid);
-                }
-                else {
-                    lanzarCalendario(tipoAplicacion);
-                }
-            }
-        }.execute();
 
     }
 
+    public void huboUnProblemaAlIniciarSecion(){
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle(getString(R.string.problema_inic_secion_title))
+                .setMessage(getString(R.string.problema_inic_secion_message))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+    }
+
     public void lanzarCalendario (DatabaseManager.TipoAplicacion t){
+
         Intent i = new Intent(this, Calendario.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtra(USUARIO_BUNDLE_KEY,user.getUid());
         i.putExtra(TIPO_BUNDLE_KEY,t.getTipoString());
-        getFragmentManager().findFragmentById("hola").
         startActivity(i);
-
     }
 
 
@@ -340,7 +371,12 @@ public class PreLoginActivity extends AppCompatActivity {
         int i = getItem(-1);
         if(i>0)
         pager.setCurrentItem(i);
-        else super.onBackPressed();
+        else
+            {
+            Intent intent = new Intent(getApplicationContext(), PreLoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);}
     }
 
 

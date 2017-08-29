@@ -1,9 +1,12 @@
 package ubung.co.ubung;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +30,36 @@ public class SolicitudEnviadaActivity extends AppCompatActivity implements Child
         uid=i.getStringExtra(PreLoginActivity.USUARIO_BUNDLE_KEY);
         userDatabaseReference=FirebaseDatabase.getInstance().getReference().child(getString(R.string.nombre_solicitudedFDB));
         userDatabaseReference.addChildEventListener(this);
+        vecesPress=0;
     }
+
+
+    int vecesPress;
+    @Override
+    public void onBackPressed() {
+        if(vecesPress==1){
+            cerrarSecion();
+            return;
+        }
+        vecesPress=1;
+        Toast.makeText(this,"Preciona otravez para inicia secion",Toast.LENGTH_LONG).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                vecesPress=0;
+            }
+        }, 2000);
+
+    }
+
+    private void cerrarSecion() {
+        FirebaseAuth.getInstance().signOut();
+        Intent i = new Intent(this,PreLoginActivity.class);
+        startActivity(i);
+    }
+
 
 
     @Override

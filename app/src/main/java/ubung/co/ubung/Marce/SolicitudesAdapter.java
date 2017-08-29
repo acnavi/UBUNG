@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.util.ArrayList;
+
 import ubung.co.ubung.Utilidades.SolicitudesDBUtilities;
 import ubung.co.ubung.R;
 
@@ -43,6 +45,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
     private final static String PROYECT_ID= "ubung-4f2c1";
     private final static String APIKEY =
             "AIzaSyCFWESIjexEC-I6AkapwbHtoMMXa3hgZPU";
+    private final static String TAG="SolicitudesAdapter";
    // private final ValueEventListener valueEventListener;
 
     private static Context context;
@@ -64,7 +67,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
         mapaPosicionViewHolderFoto= new String[cantidadSolicitudes];
         mapaPosicionViewHolderNombre= new String[cantidadSolicitudes];
-        mapaPosicionViewHolderUids= new String[cantidadSolicitudes];;
+        mapaPosicionViewHolderUids= new String[cantidadSolicitudes];
 
         solicitudesDB = FirebaseDatabase.getInstance().getReference(context.getString(R.string.nombre_solicitudedFDB));
         final ChildEventListener childEventListener = new ChildEventListener() {
@@ -193,7 +196,8 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                                     break;
                                 case R.id.holder_solicitud_boton_rechazar:
                                     eliminarUsuario(dsCorreo,dsContresena);
-                                    FirebaseAuth.getInstance().getCurrentUser();
+
+                                    if (FirebaseAuth.getInstance().getCurrentUser()!=null) Log.e(TAG,FirebaseAuth.getInstance().getCurrentUser().getUid());
                                     solicitudResuelta(uid);
                                     break;
                             }
@@ -236,37 +240,34 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
      * @param contraseña
      * @return el uid del correo del Usuario si fue agregado correctamente, null de lo contrario;
      */
-    public static String crearUsuario(String correo, String contraseña){
-
-        //Voy aca
-        // entender como abrir otra app FIrebase para que marce cree una cuenta sin salirce de la de ella
-        FirebaseOptions.Builder builder= new FirebaseOptions.Builder();
-        FirebaseOptions options= builder.setApiKey(APIKEY).setApplicationId(APP_ID).setProjectId(PROYECT_ID).build();
-        FirebaseApp segundaApp = FirebaseApp.initializeApp(context,FirebaseApp.getInstance().getOptions(),"segundaapp");
-        final FirebaseAuth secondAuth = FirebaseAuth.getInstance(segundaApp);
-        String uid=null;
-        Task t = secondAuth.createUserWithEmailAndPassword(correo, contraseña);
-
-        t.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(!task.isSuccessful())
-                        //TODO: Notificar ERROR
-                        Log.e("Hubo","un problemacom")
-                                ;
-                    else {
-                        Log.i("Si sirvio","punto com");
-                    }
-                }
-
-            });
-        FirebaseUser user = secondAuth.getCurrentUser();
-        if(user!=null)
-        uid=user.getUid();
-        secondAuth.signOut();
-        return uid;
-    }
+//    public static String crearUsuario(String correo, String contraseña){
+//        FirebaseOptions.Builder builder= new FirebaseOptions.Builder();
+//        FirebaseOptions options= builder.setApiKey(APIKEY).setApplicationId(APP_ID).setProjectId(PROYECT_ID).build();
+//        FirebaseApp segundaApp = FirebaseApp.initializeApp(context,FirebaseApp.getInstance().getOptions(),"segundaapp");
+//        final FirebaseAuth secondAuth = FirebaseAuth.getInstance(segundaApp);
+//        String uid=null;
+//        Task t = secondAuth.createUserWithEmailAndPassword(correo, contraseña);
+//
+//        t.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if(!task.isSuccessful())
+//                        //TODO: Notificar ERROR
+//                        Log.e("Hubo","un problemacom")
+//                                ;
+//                    else {
+//                        Log.i("Si sirvio","punto com");
+//                    }
+//                }
+//
+//            });
+//        FirebaseUser user = secondAuth.getCurrentUser();
+//        if(user!=null)
+//        uid=user.getUid();
+//        secondAuth.signOut();
+//        return uid;
+//    }
 
     public void eliminarUsuario(String correo, String contraseña){
         FirebaseApp segundaApp = FirebaseApp.initializeApp(context,FirebaseApp.getInstance().getOptions(),"segundaapp");
@@ -282,7 +283,6 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
     public void anadirSolicitud(String nombre, boolean foto, String uid){
 
         cantidadSolicitudes++;
-
 
 
         String[] tempNom= new String[cantidadSolicitudes];
@@ -317,18 +317,23 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
         String[] tempUs= new String[cantidadSolicitudes];
         int i=0;
         int ret=-1;
-        for(; i<cantidadSolicitudes+1; ){
+        // esto cambia a uno cuando encuentra la coincidencia y se le suma al indice para sacarlo de la antigua lista
+        int uno=0;
+        for(; i<cantidadSolicitudes+1; i++){
             if(!mapaPosicionViewHolderNombre[i].equals(nombre)){
-                tempNom[i]=mapaPosicionViewHolderNombre[i];
-                tempFot[i]= mapaPosicionViewHolderFoto[i];
-                tempUs [i]= mapaPosicionViewHolderUids[i];
-                i++;
+                tempNom[i-uno]=mapaPosicionViewHolderNombre[i];
+                tempFot[i-uno]= mapaPosicionViewHolderFoto[i];
+                tempUs [i-uno]= mapaPosicionViewHolderUids[i];
+
             }
-            else
-                ret=i;
+            else {
+                ret = i;
+                uno=1;
+            }
         }
         mapaPosicionViewHolderNombre=tempNom;
         mapaPosicionViewHolderFoto=tempFot;
+        mapaPosicionViewHolderUids=tempUs;
 
 
         notifyItemRemoved(ret);

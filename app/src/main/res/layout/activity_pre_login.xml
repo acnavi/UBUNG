@@ -17,6 +17,13 @@
        ></android.support.v4.view.ViewPager>
 
     <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/loading_thingi"
+        android:visibility="invisible">
+        <include layout="@layout/loaging_fragment_layout"></include>
+
+    </FrameLayout>
+    <FrameLayout
         android:id="@+id/frame_inicio_regis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
