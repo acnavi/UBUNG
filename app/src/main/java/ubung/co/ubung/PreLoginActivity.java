@@ -20,12 +20,14 @@ import android.support.transition.Scene;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,7 +84,7 @@ public class PreLoginActivity extends AppCompatActivity {
     private StorageReference solicitudesFotosStorage;
     public static final String GENERO_HOMBRE="hombre";
     public static final String GENERO_MUJER="mujer";
-    private String selectedImagePath;
+    private Uri selectedImagePath;
     private ImageView foto;
 
     private ViewPager pager;
@@ -93,7 +95,7 @@ public class PreLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getSupportActionBar().hide();
         if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("EXIT", false)) {
             finish();
         }
@@ -103,9 +105,9 @@ public class PreLoginActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
 
         solicitudesFotosStorage= FirebaseStorage.getInstance().getReference()
-                .child(getString(R.string.nombre_solicitudedFDB));
+                .child(getString(R.string.nomble_fotos_perfilSR));
 
-//        mAuth.signOut();
+
         user = mAuth.getCurrentUser();
 
         dataBaseSupreme= FirebaseDatabase.getInstance().getReference();
@@ -147,9 +149,11 @@ public class PreLoginActivity extends AppCompatActivity {
 
     public void lanzarSolicitudEnviada(String uid){
 
+
         Intent i = new Intent(PreLoginActivity.this, SolicitudEnviadaActivity.class);
         i.putExtra(USUARIO_BUNDLE_KEY,uid);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        findViewById(R.id.loading_thingi).setVisibility(View.INVISIBLE);
         startActivity(i);
     }
 
@@ -276,6 +280,9 @@ public class PreLoginActivity extends AppCompatActivity {
 
 
 
+    /*
+    Hicieron click en cualquiera de los dos botones
+     */
 
     public void hicieronClick(View view){
 
@@ -343,6 +350,8 @@ public class PreLoginActivity extends AppCompatActivity {
 
                 else if(current==4){
 
+                    if(esHombre==null){ Toast.makeText(this,"Debes seleccionar tu genero.",Toast.LENGTH_LONG).show();
+                    return;}
                     if(!esHombre[0]){
                         params[2]=GENERO_MUJER;
                     }
@@ -426,37 +435,26 @@ public class PreLoginActivity extends AppCompatActivity {
         ref.setValue(values);
         if(selectedImagePath!=null){
 
-            try {
                 //TODO: Hacer esto servir (subir foto)
-                InputStream is = new FileInputStream(new File(selectedImagePath));
-                UploadTask up=solicitudesFotosStorage.putStream(is);
+
+                UploadTask up=solicitudesFotosStorage.child(uid).putFile(selectedImagePath);
                 up.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        TextView tv = (TextView) findViewById(R.id.tv_solicitud_enviada);
-                        tv.setText("Tu solicitud fue enviada. En cuanto sea aceptada podras reservar clases.");
-                        setContentView(R.layout.solicitud_enviada);
                         ref.child(getString(R.string.db_foto)).setValue(false);
                     }
                 }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        TextView tv = (TextView) findViewById(R.id.tv_solicitud_enviada);
-                        tv.setText("Tu solicitud fue enviada. En cuanto sea aceptada podras reservar clases.");
-                        setContentView(R.layout.solicitud_enviada);
                         ref.child(getString(R.string.db_foto)).setValue(true);
                     }
                 });
 
-            } catch (FileNotFoundException e) {
-                Toast.makeText(PreLoginActivity.this,"No sirve elinput stream asi", Toast.LENGTH_LONG).show();
 
-                e.printStackTrace();
-            }
 
 
         }
-        ref.child(getString(R.string.db_foto)).setValue(false);
+        else ref.child(getString(R.string.db_foto)).setValue(false);
         //Solicituid enviada
         lanzarSolicitudEnviada(uid);
 
@@ -491,7 +489,8 @@ public class PreLoginActivity extends AppCompatActivity {
 
             Uri targetUri = data.getData();
 
-            selectedImagePath=targetUri.getPath();
+
+            selectedImagePath=targetUri;
             Bitmap bitmap;
             try {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
@@ -779,7 +778,7 @@ public class PreLoginActivity extends AppCompatActivity {
 
 
 
-    private static final boolean[] esHombre= new boolean[1];
+    private static boolean[] esHombre;
     public static class FragmentoSexo extends Fragment{
 
         public void seleccionarBoton(View b ){
@@ -807,6 +806,7 @@ public class PreLoginActivity extends AppCompatActivity {
             mujerB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (esHombre==null) esHombre= new boolean[1];
                     seleccionarBoton(mujerB);
                     desSeleccionarBoton(hombreB);
                     esHombre[0]=false;
@@ -816,6 +816,7 @@ public class PreLoginActivity extends AppCompatActivity {
             hombreB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (esHombre==null) esHombre= new boolean[1];
                     desSeleccionarBoton(mujerB);
                     seleccionarBoton(hombreB);
                     esHombre[0]=true;

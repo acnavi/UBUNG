@@ -5,13 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:id="@+id/holder_solicitud_foto"
+        android:background="@drawable/circulito_de_foto"
+        android:scaleType="centerCrop"/>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/holder_solicitud_foto"/>
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/holder_solicitud_tv_nombre"
+        android:paddingLeft="100dp"
+        android:id="@+id/holder_solicitud_tv_nombre"
         tools:text="Carolina Poveda"
         android:layout_gravity="start|center_vertical"/>
 

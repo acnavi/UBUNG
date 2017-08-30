@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/registrarse_genero_mujer"
+            android:text="@string/registrarse_genero_mujer"
             android:layout_gravity="center_horizontal|bottom"/>
     </FrameLayout>
 </LinearLayout>

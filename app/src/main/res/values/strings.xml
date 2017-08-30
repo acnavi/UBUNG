@@ -42,6 +42,7 @@
     <!--Basededatos-->
 
     <string name="nomble_clasesFDB" translatable="false">clases</string>
+    <string name="nomble_fotos_perfilSR" translatable="false">fotos de perfil</string>
 
     <string name="db_clases_profe_poner_numero" translatable="false">profe</string>
 

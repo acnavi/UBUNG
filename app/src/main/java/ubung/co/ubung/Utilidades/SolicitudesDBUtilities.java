@@ -14,7 +14,8 @@ public class SolicitudesDBUtilities {
             R.string.db_cumpleanos,
             R.string.db_genero,
             R.string.db_nombre,
-            R.string.db_tel
+            R.string.db_tel,
+            R.string.db_foto
 
     };
 

@@ -1,6 +1,8 @@
 package ubung.co.ubung.Marce;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -26,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 import java.util.ArrayList;
@@ -40,6 +48,7 @@ import ubung.co.ubung.R;
 public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.SolicitudesViewHolder> {
 
     private  DatabaseReference solicitudesDB;
+    private  StorageReference solicitudesSR;
     private int cantidadSolicitudes;
     private final static String APP_ID ="1:539271845073:android:82756593d6c782a7" ;
     private final static String PROYECT_ID= "ubung-4f2c1";
@@ -53,7 +62,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
 
     private String[] mapaPosicionViewHolderNombre;
-    private String[] mapaPosicionViewHolderFoto;
+    private boolean[] mapaPosicionViewHolderFoto;
     private String[] mapaPosicionViewHolderUids;
 
 
@@ -65,17 +74,23 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
         cantidadSolicitudes =0;
 
-        mapaPosicionViewHolderFoto= new String[cantidadSolicitudes];
+        mapaPosicionViewHolderFoto= new boolean[cantidadSolicitudes];
         mapaPosicionViewHolderNombre= new String[cantidadSolicitudes];
         mapaPosicionViewHolderUids= new String[cantidadSolicitudes];
 
         solicitudesDB = FirebaseDatabase.getInstance().getReference(context.getString(R.string.nombre_solicitudedFDB));
+        solicitudesSR= FirebaseStorage.getInstance().getReference(context.getString(R.string.nomble_fotos_perfilSR));
+
         final ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String nom = (String) dataSnapshot.child(context.getString(R.string.db_nombre)).getValue();
+                final String uid = dataSnapshot.getKey();
+                final String nom = (String) dataSnapshot.child(context.getString(R.string.db_nombre)).getValue();
                 boolean fot = (boolean) dataSnapshot.child(context.getString(R.string.db_foto)).getValue();
-                anadirSolicitud(nom,fot,dataSnapshot.getKey());
+
+                anadirSolicitud(nom,fot,uid);
+
+
             }
 
             @Override
@@ -122,7 +137,14 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
         holder.nombre.setText(mapaPosicionViewHolderNombre[position]);
         holder.uid = mapaPosicionViewHolderUids[position];
-
+        holder.tieneFoto=mapaPosicionViewHolderFoto[position];
+        if(mapaPosicionViewHolderFoto[position]){
+            StorageReference sr= solicitudesSR.child(mapaPosicionViewHolderUids[position]);
+            Glide.with(context)
+                    .using(new FirebaseImageLoader())
+                    .load(sr)
+                    .into(holder.foto);
+        }
         //TODO: Descargar la libreria glide y usarla para poner la foto en el ImageView
 
     }
@@ -135,6 +157,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
     public class SolicitudesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView foto;
+        boolean tieneFoto;
         TextView nombre;
         Button aceptar;
         Button rechaButton;
@@ -147,6 +170,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
             aceptar= (Button) itemView.findViewById(R.id.holder_solicitud_boton_aceptar);
             aceptar.setOnClickListener(SolicitudesViewHolder.this);
             rechaButton.setOnClickListener(SolicitudesViewHolder.this);
+            tieneFoto=false;
         }
 
         public void onClick(View v) {
@@ -159,7 +183,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
                     //VOY ACA
                     //Tenga en cuenta
-                    // no se esta completando todo lo que hace este listen
+                    // no se esta completando to do lo que hace este listen
 
                     solicitudesDB.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -188,14 +212,14 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
                                     for (String espacio : strings) {
                                         DataSnapshot dataSnapAPegar = soliData.child(espacio);
-                                        String dataAPegar = (String) dataSnapAPegar.getValue();
+                                        Object dataAPegar =  dataSnapAPegar.getValue();
                                         usuario.child(espacio).setValue(dataAPegar);
                                     }
 
                                     solicitudResuelta(uid);
                                     break;
                                 case R.id.holder_solicitud_boton_rechazar:
-                                    eliminarUsuario(dsCorreo,dsContresena);
+                                    eliminarUsuario(dsCorreo,dsContresena,tieneFoto);
 
                                     if (FirebaseAuth.getInstance().getCurrentUser()!=null) Log.e(TAG,FirebaseAuth.getInstance().getCurrentUser().getUid());
                                     solicitudResuelta(uid);
@@ -269,11 +293,13 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 //        return uid;
 //    }
 
-    public void eliminarUsuario(String correo, String contraseña){
+    public void eliminarUsuario(String correo, String contraseña, boolean tieneFoto){
         FirebaseApp segundaApp = FirebaseApp.initializeApp(context,FirebaseApp.getInstance().getOptions(),"segundaapp");
         final FirebaseAuth secondAuth = FirebaseAuth.getInstance(segundaApp);
         secondAuth.signInWithEmailAndPassword(correo,contraseña);
         FirebaseUser u = secondAuth.getCurrentUser();
+        if(tieneFoto)
+        solicitudesSR.child(u.getUid()).delete();
         u.delete();    }
     /**
      * Anade una solicitud a ambos mapas y aumenta en 1 la cantidad de solicitudes
@@ -286,7 +312,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
 
         String[] tempNom= new String[cantidadSolicitudes];
-        String[] tempFot= new String[cantidadSolicitudes];
+        boolean[] tempFot= new boolean[cantidadSolicitudes];
         String[] tempUs= new String[cantidadSolicitudes];
         int i=0;
         for(; i<cantidadSolicitudes-1; i++){
@@ -296,8 +322,8 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
         }
         tempNom[cantidadSolicitudes-1]=nombre;
         tempUs[cantidadSolicitudes-1]=uid;
-        if(foto){
-        tempFot[cantidadSolicitudes-1]=""+foto;}
+
+        tempFot[cantidadSolicitudes-1]=foto;
         mapaPosicionViewHolderNombre=tempNom;
         mapaPosicionViewHolderFoto=tempFot;
         mapaPosicionViewHolderUids=tempUs;
@@ -313,7 +339,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
         cantidadSolicitudes--;
         String[] tempNom= new String[cantidadSolicitudes];
-        String[] tempFot= new String[cantidadSolicitudes];
+        boolean[] tempFot= new boolean[cantidadSolicitudes];
         String[] tempUs= new String[cantidadSolicitudes];
         int i=0;
         int ret=-1;

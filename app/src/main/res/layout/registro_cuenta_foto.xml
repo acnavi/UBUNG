@@ -18,5 +18,6 @@
         android:layout_height="164dp"
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/circulito_de_foto"
-        app:srcCompat="@drawable/ic_portrait_black_24dp" />
+        app:srcCompat="@drawable/ic_portrait_black_24dp"
+        android:scaleType="centerCrop"/>
 </FrameLayout>
