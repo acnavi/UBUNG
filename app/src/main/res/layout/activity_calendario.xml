@@ -20,6 +20,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_calendario"
-        app:menu="@menu/activity_calendario_drawer" />
+        app:menu="@menu/activity_calendario_drawer_marce" />
 
 </android.support.v4.widget.DrawerLayout>

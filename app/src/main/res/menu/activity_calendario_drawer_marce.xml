@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_marcela">
         <item
             android:id="@+id/menu_marce_solicitudes"
             android:icon="@drawable/ic_solicitudes"
@@ -22,17 +23,23 @@
             android:icon="@drawable/ic_generar_reporte"
             android:title="@string/toolbarmenu_marce_generar_reporte"/>
     </group>
-
-    <item android:title="Communicate">
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_clientesyprofes">
+        <item
+            android:id="@+id/menu_historial"
+            android:icon="@drawable/ic_solicitudes"
+            android:title="@string/toolbarmenu_historial" />
+    </group>
+    <item android:title="">
         <menu>
+            <item
+                android:id="@+id/nav_send"
+                android:title="@string/menu_contactar" />
             <item
                 android:id="@+id/nav_cerrar_sesion"
 
-                android:title="@string/cerrar_sec" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/menu_cerrar_sec" />
+
         </menu>
     </item>
 

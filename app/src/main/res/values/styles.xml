@@ -7,7 +7,12 @@
         <item name="colorPrimaryDark">#72408d</item>
         <item name="colorAccent">#72408d</item>
     </style>
-
+    <style name="PreLoginTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#72408d</item>
+        <item name="colorPrimaryDark">#5a5896</item>
+        <item name="colorAccent">#72408d</item>
+    </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

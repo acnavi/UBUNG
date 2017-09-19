@@ -17,13 +17,14 @@
             android:name=".Calendario"
             android:configChanges="orientation"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".PreLoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/PreLoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +36,14 @@
             android:configChanges="orientation"
             android:parentActivityName=".Calendario"
             android:screenOrientation="portrait" />
-        <activity android:name=".SolicitudEnviadaActivity"
+        <activity
+            android:name=".SolicitudEnviadaActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".PerfilActivity"
+            android:parentActivityName=".Calendario"
             android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

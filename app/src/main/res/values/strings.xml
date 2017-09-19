@@ -33,9 +33,6 @@
     <string name="soli_botonRechazar">X</string>
     <!-- Solicitudes clientes -->
 
-    <!-- menu lateral/ drawer-->
-    <string name="cerrar_sec">Cerrar Sesión</string>
-    <!-- menu lateral/ drawer-->
 
     <!-- Aplicacion-->
 
@@ -106,4 +103,21 @@
     <string name="problema_inic_secion_title">Inicio Secion</string>
     <string name="problema_inic_secion_message">Hubo un problema al iniciar secion. Vuelve a intentarlo más tarde.</string>
     <!--Cosas a traducir-->
+
+    <!--Toolbar menus-->
+    <string name="menu_contactar">Contactar</string>
+    <string name="menu_cerrar_sec">Cerrar Sesión</string>
+    <string name="toolbarmenu_historial">Historial</string>
+    <!--Marce-->
+    <string name="toolbarmenu_marce_profesores">Profesores</string>
+    <string name="toolbarmenu_marce_clientes">Clientes</string>
+    <string name="toolbarmenu_marce_solicitudes">Solicitudes</string>
+    <string name="toolbarmenu_marce_paquetes">Paquetes</string>
+    <string name="toolbarmenu_marce_generar_reporte">Generar Reporte</string>
+    <!--Marce-->
+    <!--Profe-->
+
+    <!--Profe-->
+
+    <!--Toolbar menus-->
 </resources>

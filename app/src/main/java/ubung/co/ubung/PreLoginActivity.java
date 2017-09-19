@@ -96,9 +96,7 @@ public class PreLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("EXIT", false)) {
-            finish();
-        }
+
 
         setContentView(R.layout.activity_pre_login);
         findViewById(R.id.loading_thingi).setVisibility(View.VISIBLE);
@@ -152,7 +150,7 @@ public class PreLoginActivity extends AppCompatActivity {
 
         Intent i = new Intent(PreLoginActivity.this, SolicitudEnviadaActivity.class);
         i.putExtra(USUARIO_BUNDLE_KEY,uid);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         findViewById(R.id.loading_thingi).setVisibility(View.INVISIBLE);
         startActivity(i);
     }
@@ -243,6 +241,7 @@ public class PreLoginActivity extends AppCompatActivity {
     }
 
     public void huboUnProblemaAlIniciarSecion(){
+        if(!isFinishing()){
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -253,15 +252,16 @@ public class PreLoginActivity extends AppCompatActivity {
                 .setMessage(getString(R.string.problema_inic_secion_message))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-    }
+    }}
 
     public void lanzarCalendario (DatabaseManager.TipoAplicacion t){
 
         Intent i = new Intent(this, Calendario.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra(USUARIO_BUNDLE_KEY,user.getUid());
         i.putExtra(TIPO_BUNDLE_KEY,t.getTipoString());
         startActivity(i);
+
     }
 
 
@@ -380,12 +380,10 @@ public class PreLoginActivity extends AppCompatActivity {
         int i = getItem(-1);
         if(i>0)
         pager.setCurrentItem(i);
+        else if(i==-1)pager.setCurrentItem(1);
         else
             {
-            Intent intent = new Intent(getApplicationContext(), PreLoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("EXIT", true);
-        startActivity(intent);}
+            super.onBackPressed();}
     }
 
 
@@ -414,6 +412,9 @@ public class PreLoginActivity extends AppCompatActivity {
     }
 
 
+    /*
+    Retorna el item del paer en la posicion actual + i, donde i es lo que recibe por parametro.
+     */
 
     private int getItem(int i) {
         int ret=pager.getCurrentItem() + i;
@@ -909,6 +910,13 @@ public class PreLoginActivity extends AppCompatActivity {
 //
 //        }
 
+    public static void cerrarSecion(Activity context){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent= new Intent(context,PreLoginActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        context.startActivity(intent);
+        context.finish();
+    }
     }
 
 

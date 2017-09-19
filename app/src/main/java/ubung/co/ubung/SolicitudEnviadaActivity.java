@@ -55,9 +55,7 @@ public class SolicitudEnviadaActivity extends AppCompatActivity implements Child
     }
 
     private void cerrarSecion() {
-        FirebaseAuth.getInstance().signOut();
-        Intent i = new Intent(this,PreLoginActivity.class);
-        startActivity(i);
+        PreLoginActivity.cerrarSecion(this);
     }
 
 

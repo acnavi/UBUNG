@@ -50,12 +50,13 @@ public class DatabaseManager {
         public String getTipoString() {
             return tipoString;
         }
-//        public static TipoAplicacion tipoPorString(String s){
-//            if(s.equals(MARCE.getTipoString())) return MARCE;
-//            else if(s.equals(PROFE.getTipoString())) return PROFE;
-//            else if(s.equals(CLIENTE.getTipoString())) return CLIENTE;
-//            else return null;
-//        }
+        public static TipoAplicacion tipoPorString(String s){
+            if(s.equals(MARCE.getTipoString())) return MARCE;
+            else if(s.equals(PROFE.getTipoString())) return PROFE;
+            else if(s.equals(CLIENTE.getTipoString())) return CLIENTE;
+            else return null;
+
+        }
     }
 
     public DatabaseManager(Context c, TipoAplicacion t, String uid){

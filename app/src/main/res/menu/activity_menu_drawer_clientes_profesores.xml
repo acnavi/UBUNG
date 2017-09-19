@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/menu_historial"
+        android:icon="@drawable/ic_solicitudes"
+        android:title="@string/toolbarmenu_historial" />
+    </group>
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_contactar"
+                android:title="@string/menu_contactar" />
+            <item
+                android:id="@+id/nav_cerrar_sesion"
 
+                android:title="@string/menu_cerrar_sec" />
+
+        </menu>
+    </item>
 </menu>
