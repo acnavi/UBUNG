@@ -67,6 +67,7 @@ public class DatabaseContractMarce {
         public static final String COLUMN_CORREO="correo";
         public static final String COLUMN_DIRECCION="dir";
         public static final String COLUMN_CANTIDAD_DE_CLASES_DICTADAS="CANT_CLAS_DICTADAS";
+        public static final String COLUMN_PODERSYPREMO="podersupremo";
 
 
     }

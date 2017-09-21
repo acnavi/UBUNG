@@ -101,7 +101,7 @@ public class Calendario extends AppCompatActivity
         };
 
         iv.setOnClickListener(clickListener);
-        tvcorreo.setOnClickListener(clickListener);
+        tvnombre.setOnClickListener(clickListener);
         tvcorreo.setOnClickListener(clickListener);
 
         Menu m= nv.getMenu();

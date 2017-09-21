@@ -74,6 +74,7 @@
     <string name="db_foto" translatable="false">foto</string>
     <string name="db_clientes_paquete" translatable="false">paquete</string>
     <string name="db_comentarios" translatable="false">comentarios</string>
+    <string name="db_id" translatable="false">ID</string>
 
 
     <!--Basededatos-->
@@ -114,6 +115,7 @@
     <string name="toolbarmenu_marce_solicitudes">Solicitudes</string>
     <string name="toolbarmenu_marce_paquetes">Paquetes</string>
     <string name="toolbarmenu_marce_generar_reporte">Generar Reporte</string>
+    <string name="title_activity_lista_clientes_oprofesores">ListaClientesOProfesores</string>
     <!--Marce-->
     <!--Profe-->
 

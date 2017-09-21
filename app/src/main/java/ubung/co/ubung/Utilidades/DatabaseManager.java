@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import ubung.co.ubung.Objetos.Cliente;
+import ubung.co.ubung.Objetos.Profesores;
 import ubung.co.ubung.R;
 
 
@@ -37,6 +39,7 @@ public class DatabaseManager {
     private final static FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
     private String userUID;
 
+    private final static String TAG="DatabaseManager";
     public enum TipoAplicacion{
 
         MARCE("marce"),CLIENTE("cliente"),PROFE("profe"),CLIENTENOACEPTADO("clientena");
@@ -103,7 +106,12 @@ public class DatabaseManager {
     }
 
 
-
+    //////// //////// //       // // ////////     //     ////////
+    //    // //        //     //  // //          // //   //    //
+    //////// ////////   //   //   // ////////   //////   ////////
+    //   //   //          // //    //       //  //    // //   //
+    //   //  ////////     //      // //////// //      // //   //
+    //Pensar esta mierda bien, no entiendo al gran malparido ivank del pasado
     public  class EscuchadoryLlenadorClasesClientes implements ChildEventListener{
 
         @Override
@@ -117,14 +125,14 @@ public class DatabaseManager {
 
             }
             catch (NumberFormatException m){
-                Log.e("TAG","hubo un superproblema, may day!");
+                Log.e(TAG,"llenador clientes added 1");
             }
             DatabaseContractClientes.ClasesFuturasDB.Estado estado = queEstadoTiene(dataSnapshot);
             cv.put(DatabaseContractClientes.ClasesFuturasDB.ESTADO,estado.getEstado());
 
             long i= database.insert(DatabaseContractClientes.ClasesFuturasDB.CLASES_futuras_TABLE_NAME,null,cv);
 
-            if(i==-1) Log.e("TAG","hubo un superproblema, may day!");
+            if(i==-1) Log.e(TAG,"llenador clientes added 2");
         }
 
         public DatabaseContractClientes.ClasesFuturasDB.Estado queEstadoTiene(DataSnapshot dataSnapshot){
@@ -224,7 +232,7 @@ public class DatabaseManager {
                     DatabaseContractClientes.ClasesFuturasDB.COLUMN_FECHA+"="+fyh[0]+ " AND "+
                             DatabaseContractClientes.ClasesFuturasDB.COLUMN_HORA+"="+fyh[1],null);
 
-            if(i==-1) Log.e("TAG","hubo un superproblema, may day!");
+            if(i==-1) Log.e(TAG,"llenador clientes changed");
         }
 
         @Override
@@ -269,7 +277,7 @@ public class DatabaseManager {
 
                 }
                 catch (NumberFormatException m){
-                    Log.e("TAG","hubo un superproblema, may day!");
+                    Log.e(TAG,"hubo un superproblema proferoser added");
                 }
 
                 final String[] toAppend = new String[2];
@@ -310,7 +318,7 @@ public class DatabaseManager {
 
                 long i=database.insert(DatabaseContracProfes.ClasesDB.CLASES_TABLE_NAME,null,cv);
 
-                if(i<0) Log.e("DATABASEMANAGER", "Problemas cuando es profesor");
+                if(i<0) Log.e(TAG, "Problemas cuando es profesor added 2");
 
 
             }
@@ -373,7 +381,7 @@ public class DatabaseManager {
                             DatabaseContractClientes.ClasesFuturasDB.COLUMN_FECHA+"="+fyh[0]+ " AND "+ DatabaseContractClientes.ClasesFuturasDB.COLUMN_HORA+"="+fyh[1],
                             null);
 
-                    if(i<0) Log.e("DATABASEMANAGER", "Problemas cuando es profesor y se intenta update la base local");
+                    if(i<0) Log.e(TAG, "Problemas cuando es profesor y se intenta update la base local");
             }
             else if(existe==0 && dondeEsta>0){
                     onChildAdded(dataSnapshot,s);
@@ -394,7 +402,7 @@ public class DatabaseManager {
 
                int i= database.delete(DatabaseContracProfes.ClasesDB.CLASES_TABLE_NAME,DatabaseContractClientes.ClasesFuturasDB.COLUMN_FECHA+"="+fyh[0]+ " AND "+ DatabaseContractClientes.ClasesFuturasDB.COLUMN_HORA+"="+fyh[1],
                         null);
-                if(i==0) Log.e("DATABASEMANAGER", "Problemas cuando es profesor y se borrar un entry de la base local");
+                if(i==0) Log.e(TAG, "Problemas cuando es profesor y se borrar un entry de la base local");
             }
         }
 
@@ -436,21 +444,36 @@ public class DatabaseManager {
     }
 
 
-    public class EscuchadorYLLenadorBaseMarcela implements ChildEventListener{
+    public class EscuchadorYLLenadorBaseMarcelaClientes implements ChildEventListener{
 
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            String id= dataSnapshot.getKey();
+            Cliente cliente = dataSnapshot.getValue(Cliente.class);
+            ContentValues cv = databaseToContentValues(cliente, id);
+            long i=database.insert(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,null,cv);
+            if(i==-1) Log.e(TAG,"hubo un superproblema, may day! added marcela clientes");
 
         }
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            String id= dataSnapshot.getKey();
+            Cliente cliente = dataSnapshot.getValue(Cliente.class);
+            ContentValues cv = databaseToContentValues(cliente, id);
+            long i=database.update(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,cv,
+                    DatabaseContractMarce.ClientesDB.COLUMN_UID +"="+id,null);
+            if(i==-1) Log.e(TAG,"hubo un superproblema, may day! changed marce clientes");
 
         }
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+            String id= dataSnapshot.getKey();
+            long i =database.delete(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,
+                    DatabaseContractMarce.ClientesDB.COLUMN_UID+"="+id,null);
+            if(i==0) Log.e(TAG, "problemas removed marce clientes");
         }
 
         @Override
@@ -463,9 +486,77 @@ public class DatabaseManager {
 
         }
 
-        public void seAñadioUnCliente(DataSnapshot dsCliente){
+        public ContentValues databaseToContentValues(Cliente cliente, String id){
+            ContentValues cv= new ContentValues();
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_UID,id);
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_CORREO,cliente.getCorreo());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_CUMPLEANOS,cliente.getHbd());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_GENERO,cliente.getMasofem());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_NOMBRE,cliente.getNombre());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_PESO,cliente.getPeso());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_SEGURO_MED,cliente.getSeguromedico());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_TELEFONO,cliente.getTel());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_DIRECCION,cliente.getDireccion());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_COMENTARIOS,cliente.getDireccion());
+            return cv;
+        }
+    }
 
+    public class EscuchadorYLLenadorBaseMarcelaProfesores implements ChildEventListener{
 
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            String id= dataSnapshot.getKey();
+            Profesores profesor = dataSnapshot.getValue(Profesores.class);
+            ContentValues cv = databaseToContentValues(profesor, id);
+            long i=database.insert(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,null,cv);
+            if(i==-1) Log.e(TAG,"hubo un superproblema, may day! added marcela profes");
+
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            String id= dataSnapshot.getKey();
+            Profesores profesor = dataSnapshot.getValue(Profesores.class);
+            ContentValues cv = databaseToContentValues(profesor, id);
+            long i=database.update(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,cv,
+                    DatabaseContractMarce.ProfesoresDB.COLUMN_UID +"="+id,null);
+            if(i==-1) Log.e(TAG,"hubo un superproblema, may day! changed marce profes");
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            String id= dataSnapshot.getKey();
+            long i =database.delete(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,
+                    DatabaseContractMarce.ProfesoresDB.COLUMN_UID+"="+id,null);
+            if(i==0) Log.e(TAG, "problemas removed marce profes");
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+
+        public ContentValues databaseToContentValues(Profesores profe, String id){
+            ContentValues cv= new ContentValues();
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_UID,id);
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_CORREO,profe.getCorreo());
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_CUMPLEANOS,profe.getHbd());
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_GENERO,profe.getMasofem());
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_NOMBRE,profe.getNombre());
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_TELEFONO,profe.getTel());
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_CANTIDAD_DE_CLASES_DICTADAS,profe.getClases_dictadas());
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_DIRECCION,profe.getDireccion());
+            cv.put(DatabaseContractMarce.ProfesoresDB.COLUMN_PODERSYPREMO,profe.getPodersupremo());
+
+            return cv;
         }
     }
 
