@@ -27,7 +27,7 @@ public class MarceDatabaseHelper extends SQLiteOpenHelper {
     private void crearTablaClases( SQLiteDatabase db) {
 
         final String SQL_COMAND= "CREATE TABLE "+DatabaseContractMarce.ClasesDB.CLASES_TABLE_NAME+" ("+
-                DatabaseContractMarce.ClasesDB._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+                DatabaseContractMarce.ClasesDB._ID+" INTEGER PRIMARY KEY, "+
                 DatabaseContractMarce.ClasesDB.COLUMN_FECHA+" TEXT NOT NULL, "+
                 DatabaseContractMarce.ClasesDB.COLUMN_HORA+" INTEGER NOT NULL, "+
                 DatabaseContractMarce.ClasesDB.COLUMN_PROFE1+" TEXT NOT NULL, "+
@@ -47,7 +47,7 @@ public class MarceDatabaseHelper extends SQLiteOpenHelper {
     private void crearTablaProfesores(SQLiteDatabase db) {
 
         final String SQL_COMAND= "CREATE TABLE "+DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME+" ("+
-                DatabaseContractMarce.ProfesoresDB._ID+" INTEGER AUTOINCREMENT, " +
+                DatabaseContractMarce.ProfesoresDB._ID+" INTEGER AUTO_INCREMENT, " +
                 DatabaseContractMarce.ProfesoresDB.COLUMN_UID + " TEXT PRIMARY KEY, " +
                 DatabaseContractMarce.ProfesoresDB.COLUMN_NOMBRE + " TEXT NOT NULL, "+
                 DatabaseContractMarce.ProfesoresDB.COLUMN_CUMPLEANOS + " TEXT NOT NULL, " +
@@ -64,7 +64,7 @@ public class MarceDatabaseHelper extends SQLiteOpenHelper {
     private void crearTablaPaquetes(SQLiteDatabase db) {
 
         final String SQL_COMAND= "CREATE TABLE "+DatabaseContractMarce.PaquetesDB.PAQUETES_TABLE_NAME+" ("+
-                DatabaseContractMarce.PaquetesDB._ID+" INTEGER AUTOINCREMENT, " +
+                DatabaseContractMarce.PaquetesDB._ID+" INTEGER AUTO_INCREMENT, " +
                 DatabaseContractMarce.PaquetesDB.COLUMN_UID_CLIENTE + " TEXT PRIMARY KEY, " +
                 DatabaseContractMarce.PaquetesDB.COLUMN_FECHA_DE_VENCIMIENTO + " TEXT NOT NULL, " +
                 DatabaseContractMarce.PaquetesDB.COLUMN_CLASES_DEL_PAQUETE + " INTEGER NOT NULL, " +
@@ -78,7 +78,7 @@ public class MarceDatabaseHelper extends SQLiteOpenHelper {
     public void crearTablaClientes(SQLiteDatabase db){
 
         final String SQL_COMAND= "CREATE TABLE "+DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME+" ("+
-                DatabaseContractMarce.ClientesDB._ID+" INTEGER AUTOINCREMENT, " +
+                DatabaseContractMarce.ClientesDB._ID+" INTEGER AUTO_INCREMENT, " +
                 DatabaseContractMarce.ClientesDB.COLUMN_UID + " TEXT PRIMARY KEY, " +
                 DatabaseContractMarce.ClientesDB.COLUMN_NOMBRE + " TEXT NOT NULL, "+
                 DatabaseContractMarce.ClientesDB.COLUMN_CUMPLEANOS + " TEXT NOT NULL, " +

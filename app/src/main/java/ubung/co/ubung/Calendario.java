@@ -26,6 +26,7 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -130,7 +131,7 @@ public class Calendario extends AppCompatActivity
         //ESTO lo he hechoyo
 
 
-//        DatabaseManager databaseManager= new DatabaseManager(this,tipo,userUid);
+        DatabaseManager databaseManager= new DatabaseManager(this,tipo,userUid);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         semanaAdapter= new SemanaFragmentAdapter(getSupportFragmentManager(),4);
@@ -159,7 +160,13 @@ public class Calendario extends AppCompatActivity
 
                 String nombre = dataSnapshot.child(keynombre).getValue(String.class);
                 String correo = dataSnapshot.child(keycorreo).getValue(String.class);
-                String telefono= dataSnapshot.child(keytelefono).getValue(String.class);
+                String telefono;
+                try{
+                telefono= dataSnapshot.child(keytelefono).getValue(String.class);}
+                catch (DatabaseException e){
+                    long l = dataSnapshot.child(keytelefono).getValue(Long.class);
+                    telefono= ""+l;
+                }
                 String fecha= dataSnapshot.child(keycumple).getValue(String.class);
                 int edad = LaClaseQueHaceTodoConLasFechas.queEdadSiNacioEn(fecha);
                 String genero= dataSnapshot.child(keygenero).getValue(String.class);

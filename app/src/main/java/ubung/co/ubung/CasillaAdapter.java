@@ -34,7 +34,7 @@ public class CasillaAdapter extends RecyclerView.Adapter<CasillaAdapter.CasillaV
     public final static int TIPO_HORA=1098;
     public final static int TIPO_CLASE=9874;
     public final static int NUMERO_DE_COLUMNAS=DIAS_SEMANA+1;
-    public final static String NOMBRE_GENERAL_BASE_DE_DATOS_CLASE="clase.db";
+    public final static String NOMBRE_GENERAL_BASE_DE_DATOS_CLASE="clasedb";
     public static final String GENERAL_COLUMN_FECHA="fecha";
     public static final String GENERAL_COLUMN_HORA="hora";
 
