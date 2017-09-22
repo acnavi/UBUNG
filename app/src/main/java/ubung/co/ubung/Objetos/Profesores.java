@@ -5,7 +5,7 @@ package ubung.co.ubung.Objetos;
  */
 
 public class Profesores {
-    private String clases_dictadas;
+    private long clases_dictadas;
     private String nombre;
     private String correo;
     private String hbd;
@@ -37,7 +37,7 @@ public class Profesores {
         this.nombre = nombre;
     }
 
-    public void setClases_dictadas(String clases_dictadas) {
+    public void setClases_dictadas(long clases_dictadas) {
         this.clases_dictadas = clases_dictadas;
     }
 
@@ -58,7 +58,7 @@ public class Profesores {
         this.podersupremo = podersupremo;
     }
 
-    public String getClases_dictadas() {
+    public long getClases_dictadas() {
         return clases_dictadas;
     }
 
