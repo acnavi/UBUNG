@@ -90,6 +90,10 @@ public class DatabaseManager {
         switch (tipo){
             case MARCE:
 
+                firebaseDatabase.getReference().child(context.getString(R.string.nombre_clienteFDB))
+                        .addChildEventListener(new EscuchadorYLLenadorBaseMarcelaClientes());
+                firebaseDatabase.getReference().child(context.getString(R.string.nomble_profesoresFDB))
+                        .addChildEventListener(new EscuchadorYLLenadorBaseMarcelaProfesores());
                 break;
             case PROFE:
                 firebaseDatabase.getReference().child(context.getString(R.string.nomble_clasesFDB))
