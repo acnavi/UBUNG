@@ -37,6 +37,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import ubung.co.ubung.Marce.ListaClientesOProfesores;
 import ubung.co.ubung.Marce.SolocitudesClientesActivity;
 import ubung.co.ubung.Utilidades.DatabaseManager;
 import ubung.co.ubung.Utilidades.LaClaseQueHaceTodoConLasFechas;
@@ -252,8 +253,13 @@ public class Calendario extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_marce_clientes) {
-
+            Intent i = new Intent(this, ListaClientesOProfesores.class);
+            i.putExtra(ListaClientesOProfesores.KEY_ES_CLIENTE,true);
+            startActivity(i);
         } else if (id == R.id.menu_marce_profesores) {
+            Intent i = new Intent(this, ListaClientesOProfesores.class);
+            i.putExtra(ListaClientesOProfesores.KEY_ES_CLIENTE,false);
+            startActivity(i);
 
         } else if (id == R.id.menu_marce_solicitudes) {
             Intent i = new Intent(this, SolocitudesClientesActivity.class);

@@ -142,7 +142,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
             StorageReference sr= solicitudesSR.child(mapaPosicionViewHolderUids[position]);
             Glide.with(context)
                     .using(new FirebaseImageLoader())
-                    .load(sr)
+                    .load(sr).dontAnimate()
                     .into(holder.foto);
         }
         //TODO: Descargar la libreria glide y usarla para poner la foto en el ImageView
