@@ -501,7 +501,7 @@ public class DatabaseManager {
             cv.put(DatabaseContractMarce.ClientesDB.COLUMN_SEGURO_MED,cliente.getSeguromedico());
             cv.put(DatabaseContractMarce.ClientesDB.COLUMN_TELEFONO,cliente.getTel());
             cv.put(DatabaseContractMarce.ClientesDB.COLUMN_DIRECCION,cliente.getDireccion());
-            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_COMENTARIOS,cliente.getDireccion());
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_COMENTARIOS,cliente.getComentarios());
             return cv;
         }
     }

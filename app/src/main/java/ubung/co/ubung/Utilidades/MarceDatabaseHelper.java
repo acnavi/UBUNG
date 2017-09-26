@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MarceDatabaseHelper extends SQLiteOpenHelper {
 
     private final static String DATABASE_NAME="databaseMarce.db";
-    private final static int DATABASE_VERSION= 1;
+    private final static int DATABASE_VERSION= 3;
 
     public MarceDatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -55,7 +55,8 @@ public class MarceDatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContractMarce.ProfesoresDB.COLUMN_DIRECCION + " TEXT, " +
                 DatabaseContractMarce.ProfesoresDB.COLUMN_TELEFONO + " TEXT, "+
                 DatabaseContractMarce.ProfesoresDB.COLUMN_GENERO+ " TEXT, "+
-                DatabaseContractMarce.ProfesoresDB.COLUMN_CANTIDAD_DE_CLASES_DICTADAS + "INTEGER NOT NULL);";
+                DatabaseContractMarce.ProfesoresDB.COLUMN_PODERSYPREMO+" BOOLEAN NOT NULL, "+
+                DatabaseContractMarce.ProfesoresDB.COLUMN_CANTIDAD_DE_CLASES_DICTADAS + " INTEGER NOT NULL);";
 
         db.execSQL(SQL_COMAND);
 
@@ -85,7 +86,7 @@ public class MarceDatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContractMarce.ClientesDB.COLUMN_CORREO + " TEXT, "+
                 DatabaseContractMarce.ClientesDB.COLUMN_DIRECCION + " TEXT, " +
                 DatabaseContractMarce.ClientesDB.COLUMN_TELEFONO + " TEXT, "+
-                DatabaseContractMarce.ClientesDB.COLUMN_PESO + "INTEGER, "+
+                DatabaseContractMarce.ClientesDB.COLUMN_PESO + " INTEGER, "+
                 DatabaseContractMarce.ClientesDB.COLUMN_SEGURO_MED + " TEXT, " +
                 DatabaseContractMarce.ClientesDB.COLUMN_COMENTARIOS + " TEXT, "+
                 DatabaseContractMarce.ClientesDB.COLUMN_GENERO+ " TEXT);";
