@@ -3,6 +3,8 @@ package ubung.co.ubung.Utilidades;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import com.google.firebase.database.DatabaseReference;
+
 import ubung.co.ubung.CasillaAdapter;
 
 /**
@@ -15,14 +17,28 @@ public class DatabaseContractMarce {
 
     public static final Uri URI_BASE= Uri.parse("content://"+ AUTHORITY);
 
+
     public static final String PATH_CLASES="clases";
     public static final String PATH_CLIENTES="clientes";
     public static final String PATH_PAQUETES="paquetes";
     public static final String PATH_PROFESORES="profesores";
 
 
+    public static class Persona implements BaseColumns{
+        /*
+        SOn los mismos valores que aparecen en res/strings
+         */
+        public static final String COLUMN_UID="ID";
+        public static final String COLUMN_NOMBRE="nombre";
+        public static final String COLUMN_CUMPLEANOS="hbd";
+        public static final String COLUMN_GENERO="masofem";
+        public static final String COLUMN_TELEFONO="telefono";
+        public static final String COLUMN_CORREO="correo";
+        public static final String COLUMN_DIRECCION="direccion";
+        public static final String COLUMN_PESO="peso";
+    }
 
-    public static final class ClientesDB implements BaseColumns{
+    public static final class ClientesDB extends Persona{
 
         /**
          * Nombre de la tabla
@@ -34,20 +50,13 @@ public class DatabaseContractMarce {
         /**
          * Nombre de las columnas de la tabla
          */
-        public static final String COLUMN_UID="uid";
-        public static final String COLUMN_NOMBRE="nombre";
-        public static final String COLUMN_CUMPLEANOS="bday";
-        public static final String COLUMN_GENERO="genero";
-        public static final String COLUMN_TELEFONO="telefono";
-        public static final String COLUMN_CORREO="correo";
-        public static final String COLUMN_DIRECCION="dir";
-        public static final String COLUMN_PESO="peso";
-        public static final String COLUMN_SEGURO_MED="seguro_med";
-        public static final String COLUMN_COMENTARIOS="coments";
+
+        public static final String COLUMN_SEGURO_MED="seguro";
+        public static final String COLUMN_COMENTARIOS="comentarios";
 
     }
 
-    public static final class ProfesoresDB implements BaseColumns{
+    public static final class ProfesoresDB extends Persona{
 
         /**
          * Nombre de la tabla
@@ -59,13 +68,6 @@ public class DatabaseContractMarce {
         /**
          * Nombre de las columnas de la tabla
          */
-        public static final String COLUMN_UID="uid";
-        public static final String COLUMN_NOMBRE="nombre";
-        public static final String COLUMN_CUMPLEANOS="bday";
-        public static final String COLUMN_GENERO="genero";
-        public static final String COLUMN_TELEFONO="telefono";
-        public static final String COLUMN_CORREO="correo";
-        public static final String COLUMN_DIRECCION="dir";
         public static final String COLUMN_CANTIDAD_DE_CLASES_DICTADAS="CANT_CLAS_DICTADAS";
         public static final String COLUMN_PODERSYPREMO="podersupremo";
 
@@ -121,5 +123,6 @@ public class DatabaseContractMarce {
         public static final String COLUMN_CLASES_DEL_PAQUETE="clas_paquete";
 
     }
+
 
 }

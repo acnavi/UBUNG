@@ -1,9 +1,13 @@
 package ubung.co.ubung.Marce;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +19,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import ubung.co.ubung.PerfilActivity;
 import ubung.co.ubung.R;
+import ubung.co.ubung.Utilidades.DatabaseManager;
 
 /**
  * Created by icmontesdumar on 25/09/17.
@@ -24,19 +30,22 @@ import ubung.co.ubung.R;
 public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfesorAdapter.ClienteOProfesorHolder>{
 
     private Cursor database;
-    private Context context;
+    private Activity context;
     private StorageReference foticos;
+    private boolean esCliente;
 
+    private final static String TAG="ClienteOProfesorAdapter";
     /*
     Debe pasar un cursosr cuya primera fila sean los uids y el segundo el nombre.
      */
-    public ClienteOProfesorAdapter(Cursor db, Context c){
+    public ClienteOProfesorAdapter(Cursor db, Activity c, boolean esC){
 
         database=db;
 
         context=c;
 
         foticos= FirebaseStorage.getInstance().getReference(context.getString(R.string.nomble_fotos_perfilSR));
+        esCliente=esC;
     }
     @Override
     public ClienteOProfesorHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,7 +94,16 @@ public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfes
         @Override
         public void onClick(View v) {
             if(uid!=null){
-                //HacerAlgo
+
+
+                if (context instanceof ListaClientesOProfesores){
+                    ListaClientesOProfesores l = (ListaClientesOProfesores) context;
+                    l.lanzarPerfil(uid);
+                }
+                else {
+                    Log.e(TAG,"el contexto no esta siendo de tipo ListaClientesOProfesores");
+                }
+
             }
         }
     }

@@ -60,8 +60,8 @@ public class Calendario extends AppCompatActivity
 
     private final static String TAG= "Calendario";
     public final static String SHARED_PREFERENCES_INFORMACION_PERFIL="esteeselnombredespip";
-    public final static String SHARED_PREFERENCES_KEY_EDAD="EDAD";
-    public final static String SHARED_PREFERENCES_KEY_UID="UID";
+
+    public final static String SHARED_PREFERENCES_KEY_UID="ID";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,7 +175,7 @@ public class Calendario extends AppCompatActivity
 
                 editor.putString(keycorreo,correo);
                 editor.putString(keycumple,fecha);
-                editor.putInt(SHARED_PREFERENCES_KEY_EDAD,edad);
+
                 editor.putString(SHARED_PREFERENCES_KEY_UID,userUid);
                 editor.putString(keynombre,nombre);
                 editor.putString(keygenero,genero);

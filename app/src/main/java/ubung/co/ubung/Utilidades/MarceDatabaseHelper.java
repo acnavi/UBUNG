@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MarceDatabaseHelper extends SQLiteOpenHelper {
 
     private final static String DATABASE_NAME="databaseMarce.db";
-    private final static int DATABASE_VERSION= 3;
+    private final static int DATABASE_VERSION= 4;
 
     public MarceDatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);

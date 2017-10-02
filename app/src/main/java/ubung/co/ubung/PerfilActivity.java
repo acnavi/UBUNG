@@ -5,12 +5,15 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -24,7 +27,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import ubung.co.ubung.Utilidades.DatabaseContractMarce;
 import ubung.co.ubung.Utilidades.DatabaseManager;
+import ubung.co.ubung.Utilidades.LaClaseQueHaceTodoConLasFechas;
+import ubung.co.ubung.Utilidades.MarceDatabaseHelper;
 import ubung.co.ubung.databinding.FragmentDatosContactoBinding;
 
 import static ubung.co.ubung.Calendario.SHARED_PREFERENCES_INFORMACION_PERFIL;
@@ -115,16 +121,17 @@ public class PerfilActivity extends AppCompatActivity {
         return FragmentoDatos.newInstance(FragmentoDatos.POSIBLE_TITULO_CONTACTO,contenido);
     }
     public FragmentoDatos datosInfo(Bundle sp){
-        String keyedad = Calendario.SHARED_PREFERENCES_KEY_EDAD;
+
         String keycumple = getString(R.string.db_cumpleanos);
         String keypeso= getString(R.string.db_peso);
         String keyeps= getString(R.string.db_seguro_medico);
         String keygenero= getString(R.string.db_genero);
 
         String genero= sp.getString(keygenero,"");
-        int edad = sp.getInt(keyedad,100);
+
         String cumple= sp.getString(keycumple,"");
-        String eps= sp.getString(keyeps,VALOR_PARA_SABER_SI_NO_TIENE_VALUE);
+        int edad =LaClaseQueHaceTodoConLasFechas.queEdadSiNacioEn(cumple);
+;        String eps= sp.getString(keyeps,VALOR_PARA_SABER_SI_NO_TIENE_VALUE);
         String peso= sp.getString(keypeso,VALOR_PARA_SABER_SI_NO_TIENE_VALUE);
 
         String contenido = FragmentoDatos.PRE_DOSPUNTOS_GENERO+ genero+"\n"
@@ -147,6 +154,76 @@ public class PerfilActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.perfil, menu);
         return true;
+    }
+
+    public static Bundle deLaBaseDeDatosABundle(String uid,Context context, boolean esCliente){
+        Bundle retornar = new Bundle();
+        MarceDatabaseHelper helper= new MarceDatabaseHelper(context);
+        SQLiteDatabase database= helper.getReadableDatabase();
+        Cursor c;
+        if(esCliente){
+            String[] columns ={
+                    DatabaseContractMarce.ClientesDB.COLUMN_CORREO,
+                    DatabaseContractMarce.ClientesDB.COLUMN_NOMBRE,
+                    DatabaseContractMarce.ClientesDB.COLUMN_PESO,
+                    DatabaseContractMarce.ClientesDB.COLUMN_GENERO,
+                    DatabaseContractMarce.ClientesDB.COLUMN_DIRECCION,
+                    DatabaseContractMarce.ClientesDB.COLUMN_TELEFONO,
+                    DatabaseContractMarce.ClientesDB.COLUMN_CUMPLEANOS,
+                    DatabaseContractMarce.ClientesDB.COLUMN_SEGURO_MED
+
+            };
+            c=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,
+                    columns,DatabaseContractMarce.ClientesDB.COLUMN_UID+"=\""+uid+"\"",null,null,null,null);
+        }
+        else {
+            String[] columns={
+                    DatabaseContractMarce.Persona.COLUMN_CORREO,
+                    DatabaseContractMarce.Persona.COLUMN_NOMBRE,
+
+                    DatabaseContractMarce.Persona.COLUMN_GENERO,
+                    DatabaseContractMarce.Persona.COLUMN_DIRECCION,
+                    DatabaseContractMarce.Persona.COLUMN_TELEFONO,
+                    DatabaseContractMarce.Persona.COLUMN_CUMPLEANOS
+            };
+            c=database.query(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,
+                    columns,DatabaseContractMarce.ProfesoresDB.COLUMN_UID+"=\""+uid+"\"",null,null,null,null);
+        }
+        if(c.getCount()>1){ Log.e(TAG,"hubo problemas en el metodo statico delaBase...");
+        //TODO:Lanzar execion o algo y quitar return null
+            return null;
+
+            }
+            c.moveToFirst();
+        for(int i =0; i<c.getColumnCount(); i++){
+
+            int tipo=c.getType(i);
+            String key= c.getColumnName(i);
+            switch (tipo){
+                case Cursor.FIELD_TYPE_INTEGER:
+                    int cosa=c.getInt(i);
+                    retornar.putInt(key,cosa);
+
+                    break;
+                case Cursor.FIELD_TYPE_STRING:
+                    String cosa2=c.getString(i);
+                    retornar.putString(key,cosa2);
+                    break;
+                case Cursor.FIELD_TYPE_FLOAT:
+                    int cosa3=c.getInt(i);
+                    retornar.putInt(key,cosa3);
+                    break;
+                case Cursor.FIELD_TYPE_NULL:
+
+                    break;
+                default:
+                    //TODO lanzar un error y quitar la retornada
+                    return null;
+
+            }
+        }
+
+        return retornar;
     }
 
     public static class FragmentoDatos extends android.app.Fragment {
