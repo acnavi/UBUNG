@@ -3,31 +3,45 @@ package ubung.co.ubung;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.joda.time.LocalDate;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ubung.co.ubung.Utilidades.DatabaseContractMarce;
@@ -52,6 +66,8 @@ public class PerfilActivity extends AppCompatActivity {
     public final static String BUNDLE_KEY_ID_PARA_FOTO = "lefote";
 
     private boolean esEditable;
+
+    private DatabaseReference userDataBase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,17 +87,14 @@ public class PerfilActivity extends AppCompatActivity {
         Bundle info = i.getBundleExtra(BUNDLE_KEY_BUNDLE_INFO);
         esEditable= i.getBooleanExtra(BUNDLE_KEY_ES_EDITABLE,false);
 
-
-
-
-
+        String uid =i.getStringExtra(BUNDLE_KEY_ID_PARA_FOTO);
 
 
         String nombre = info.getString(getString(R.string.db_nombre),"");
         tv.setText(nombre);
 
             StorageReference refFotico= FirebaseStorage.getInstance().getReference(getString(R.string.nomble_fotos_perfilSR))
-                    .child(i.getStringExtra(BUNDLE_KEY_ID_PARA_FOTO));
+                    .child(uid);
 
             Glide.with(this)
                     .using(new FirebaseImageLoader())
@@ -98,9 +111,28 @@ public class PerfilActivity extends AppCompatActivity {
         fragTransaction.add(ll.getId(),datosInfo(info));
         fragTransaction.commit();
         //TODO: cuaando tenga info sobre las clase aca se ve si se llena con un historial o con clase dictadas
+        userDataBase= FirebaseDatabase.getInstance().getReference();
         switch (tipo){
             case CLIENTE:
+                userDataBase=userDataBase.child(getString(R.string.nombre_clienteFDB)).child(uid);
+                if(esEditable){
+                    FloatingActionButton fab = new FloatingActionButton(this);
+                    fab.setSize(FloatingActionButton.SIZE_NORMAL);
+                    fab.setImageResource(R.drawable.ic_mas_24dp);
+                    fab.setFocusable(true);
 
+                    FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    lay.gravity= Gravity.END|Gravity.BOTTOM;
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            hizoClickEnElFAB();
+                        }
+                    });
+                    fab.setLayoutParams(lay);
+
+                    ((ViewGroup)findViewById(R.id.frame_para_el_fab)).addView(fab);
+                }
                 break;
             case MARCE:
 
@@ -245,6 +277,54 @@ public class PerfilActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void agregarPaquete(int cantidadDeClases){
+        DatabaseReference paq=userDataBase.child(getString(R.string.nomble_paqueteFDB));
+        paq.child(getString(R.string.paqueteFDB_clases_total)).setValue(cantidadDeClases);
+        paq.child(getString(R.string.paqueteFDB_clases_vistas)).setValue(0);
+        String fechaDeVec=LaClaseQueHaceTodoConLasFechas.seAcabaDeCrearUnPaqueteDemeLaFechaDeVencimiento();
+        paq.child(getString(R.string.paqueteFDB_fechadevec)).setValue(fechaDeVec);
+
+
+    }
+
+    public void hizoClickEnElFAB(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cuantas clases tendra el paquete");
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String m_Text = input.getText().toString();
+                try{int i = Integer.parseInt(m_Text);
+                agregarPaquete(i);}
+                catch (Exception e){
+                    Toast.makeText(PerfilActivity.this,"Debes introducir un numero.",Toast.LENGTH_LONG);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+
+
+
+
 
     public static class FragmentoDatos extends android.app.Fragment {
 

@@ -53,7 +53,11 @@
     <string name="db_clases_lista_de_espera" translatable="false">lista_de_espera</string>
 
 
-    <string name="nomble_paquetesFDB" translatable="false">paquetes</string>
+    <string name="nomble_paqueteFDB" translatable="false">paquete</string>
+
+    <string name="paqueteFDB_clases_total" translatable="false">clases total</string>
+    <string name="paqueteFDB_clases_vistas" translatable="false">clases vistas</string>
+    <string name="paqueteFDB_fechadevec" translatable="false">fecha de vec</string>
 
     <string name="nombre_solicitudedFDB" translatable="false">solicitudes</string>
     <string name="nombre_clienteFDB" translatable="false">clientes</string>

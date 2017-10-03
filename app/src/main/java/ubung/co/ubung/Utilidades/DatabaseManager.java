@@ -467,7 +467,7 @@ public class DatabaseManager {
             Cliente cliente = dataSnapshot.getValue(Cliente.class);
             ContentValues cv = databaseToContentValues(cliente, id);
             long i=database.update(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,cv,
-                    DatabaseContractMarce.ClientesDB.COLUMN_UID +"="+id,null);
+                    DatabaseContractMarce.ClientesDB.COLUMN_UID +"=\""+id+"\"",null);
             if(i==-1) Log.e(TAG,"hubo un superproblema, may day! changed marce clientes");
 
         }
@@ -476,7 +476,7 @@ public class DatabaseManager {
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             String id= dataSnapshot.getKey();
             long i =database.delete(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,
-                    DatabaseContractMarce.ClientesDB.COLUMN_UID+"="+id,null);
+                    DatabaseContractMarce.ClientesDB.COLUMN_UID+"=\""+id+"\"",null);
             if(i==0) Log.e(TAG, "problemas removed marce clientes");
         }
 
@@ -525,7 +525,7 @@ public class DatabaseManager {
             Profesores profesor = dataSnapshot.getValue(Profesores.class);
             ContentValues cv = databaseToContentValues(profesor, id);
             long i=database.update(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,cv,
-                    DatabaseContractMarce.ProfesoresDB.COLUMN_UID +"="+id,null);
+                    DatabaseContractMarce.ProfesoresDB.COLUMN_UID +"=\""+id+"\"",null);
             if(i==-1) Log.e(TAG,"hubo un superproblema, may day! changed marce profes");
 
         }
@@ -534,7 +534,7 @@ public class DatabaseManager {
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             String id= dataSnapshot.getKey();
             long i =database.delete(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,
-                    DatabaseContractMarce.ProfesoresDB.COLUMN_UID+"="+id,null);
+                    DatabaseContractMarce.ProfesoresDB.COLUMN_UID+"=\""+id+"\"",null);
             if(i==0) Log.e(TAG, "problemas removed marce profes");
         }
 

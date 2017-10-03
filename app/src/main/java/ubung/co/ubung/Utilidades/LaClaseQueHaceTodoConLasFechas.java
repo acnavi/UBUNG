@@ -22,4 +22,10 @@ public class LaClaseQueHaceTodoConLasFechas {
         Years y = Years.yearsBetween(birthdate,new LocalDate());
         return y.getYears();
     }
+
+    public static String seAcabaDeCrearUnPaqueteDemeLaFechaDeVencimiento(){
+        LocalDate ld= new LocalDate();
+        ld=ld.plusMonths(1);
+        return ld.getYear()+"/"+ld.getMonthOfYear()+"/"+ld.getDayOfMonth();
+    }
 }

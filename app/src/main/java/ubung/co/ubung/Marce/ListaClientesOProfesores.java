@@ -37,6 +37,7 @@ public class ListaClientesOProfesores extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView solicitudesRView = (RecyclerView) findViewById(R.id.clientes_o_profes_recycler_view);
