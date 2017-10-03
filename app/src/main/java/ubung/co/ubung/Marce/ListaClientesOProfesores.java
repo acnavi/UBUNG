@@ -73,6 +73,7 @@ public class ListaClientesOProfesores extends AppCompatActivity {
         if(esCliente) tipo= DatabaseManager.TipoAplicacion.CLIENTE.getTipoString();
         else tipo= DatabaseManager.TipoAplicacion.PROFE.getTipoString();
         i.putExtra(PerfilActivity.BUNDLE_KEY_TIPO_PERFIL, tipo);
+        i.putExtra(PerfilActivity.BUNDLE_KEY_ID_PARA_FOTO,uid);
         startActivity(i);
     }
 

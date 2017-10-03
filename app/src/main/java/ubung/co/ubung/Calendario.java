@@ -61,7 +61,7 @@ public class Calendario extends AppCompatActivity
     private final static String TAG= "Calendario";
     public final static String SHARED_PREFERENCES_INFORMACION_PERFIL="esteeselnombredespip";
 
-    public final static String SHARED_PREFERENCES_KEY_UID="ID";
+//    public final static String SHARED_PREFERENCES_KEY_UID="ID";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,7 +176,7 @@ public class Calendario extends AppCompatActivity
                 editor.putString(keycorreo,correo);
                 editor.putString(keycumple,fecha);
 
-                editor.putString(SHARED_PREFERENCES_KEY_UID,userUid);
+//                editor.putString(SHARED_PREFERENCES_KEY_UID,userUid);
                 editor.putString(keynombre,nombre);
                 editor.putString(keygenero,genero);
                 editor.putString(keytelefono,telefono);
@@ -300,9 +300,9 @@ public class Calendario extends AppCompatActivity
     public void lanzarPerfilPropio(){
         Intent intent = new Intent(this, PerfilActivity.class);
         intent.putExtra(PerfilActivity.BUNDLE_KEY_BUNDLE_INFO,sharedPreferencesToBundle(sp));
-        intent.putExtra(PerfilActivity.BUNDLE_KEY_TIENE_FOTO, tienefoto);
         intent.putExtra(PerfilActivity.BUNDLE_KEY_TIPO_PERFIL, DatabaseManager.TipoAplicacion.MARCE.getTipoString());
         intent.putExtra(PerfilActivity.BUNDLE_KEY_ES_EDITABLE,true);
+        intent.putExtra(PerfilActivity.BUNDLE_KEY_ID_PARA_FOTO,userUid);
         startActivity(intent);
     }
 

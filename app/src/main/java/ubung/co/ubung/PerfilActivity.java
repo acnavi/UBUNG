@@ -10,12 +10,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -46,13 +49,18 @@ public class PerfilActivity extends AppCompatActivity {
     public final static String BUNDLE_KEY_TIPO_PERFIL = "tipoperfil";
     public final static String BUNDLE_KEY_ES_EDITABLE = "eseditable";
     public final static String BUNDLE_KEY_BUNDLE_INFO = "SHAREDNOMBRE";
-    public final static String BUNDLE_KEY_TIENE_FOTO = "lefote";
+    public final static String BUNDLE_KEY_ID_PARA_FOTO = "lefote";
 
     private boolean esEditable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
+
+
+        ActionBar ab= getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
         TextView tv=  (TextView) findViewById(R.id.perfil_tv_nombre);
         CircleImageView cv = (CircleImageView) findViewById(R.id.perfil_foto);
@@ -62,7 +70,7 @@ public class PerfilActivity extends AppCompatActivity {
         String tipoS = i.getStringExtra(BUNDLE_KEY_TIPO_PERFIL);
         Bundle info = i.getBundleExtra(BUNDLE_KEY_BUNDLE_INFO);
         esEditable= i.getBooleanExtra(BUNDLE_KEY_ES_EDITABLE,false);
-        boolean tienefoto= i.getBooleanExtra(BUNDLE_KEY_TIENE_FOTO,false);
+
 
 
 
@@ -71,15 +79,16 @@ public class PerfilActivity extends AppCompatActivity {
 
         String nombre = info.getString(getString(R.string.db_nombre),"");
         tv.setText(nombre);
-        if(tienefoto){
+
             StorageReference refFotico= FirebaseStorage.getInstance().getReference(getString(R.string.nomble_fotos_perfilSR))
-                    .child(info.getString(Calendario.SHARED_PREFERENCES_KEY_UID,""));
+                    .child(i.getStringExtra(BUNDLE_KEY_ID_PARA_FOTO));
+
             Glide.with(this)
                     .using(new FirebaseImageLoader())
                     .load(refFotico)
                     .dontAnimate()
                     .into(cv);
-        }
+
 
         DatabaseManager.TipoAplicacion tipo = DatabaseManager.TipoAplicacion.tipoPorString(tipoS);
 
@@ -224,6 +233,17 @@ public class PerfilActivity extends AppCompatActivity {
         }
 
         return retornar;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static class FragmentoDatos extends android.app.Fragment {
