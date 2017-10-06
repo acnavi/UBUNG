@@ -53,6 +53,7 @@ public class DatabaseContractMarce {
 
         public static final String COLUMN_SEGURO_MED="seguro";
         public static final String COLUMN_COMENTARIOS="comentarios";
+        public static final String COLUMN_PAQUETE="paquete";
 
     }
 

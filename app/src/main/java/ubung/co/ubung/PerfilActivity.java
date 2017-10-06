@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -36,8 +38,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -91,6 +96,7 @@ public class PerfilActivity extends AppCompatActivity {
 
 
         String nombre = info.getString(getString(R.string.db_nombre),"");
+
         tv.setText(nombre);
 
             StorageReference refFotico= FirebaseStorage.getInstance().getReference(getString(R.string.nomble_fotos_perfilSR))
@@ -116,22 +122,27 @@ public class PerfilActivity extends AppCompatActivity {
             case CLIENTE:
                 userDataBase=userDataBase.child(getString(R.string.nombre_clienteFDB)).child(uid);
                 if(esEditable){
-                    FloatingActionButton fab = new FloatingActionButton(this);
-                    fab.setSize(FloatingActionButton.SIZE_NORMAL);
-                    fab.setImageResource(R.drawable.ic_mas_24dp);
-                    fab.setFocusable(true);
+                    boolean bool= 1==info.getInt(DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE,0);
+                    if(!bool) {
+                        FloatingActionButton fab = new FloatingActionButton(this);
+                        fab.setSize(FloatingActionButton.SIZE_NORMAL);
+                        fab.setImageResource(R.drawable.ic_mas_24dp);
+                        fab.setFocusable(true);
 
-                    FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    lay.gravity= Gravity.END|Gravity.BOTTOM;
-                    fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            hizoClickEnElFAB();
-                        }
-                    });
-                    fab.setLayoutParams(lay);
+                        FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        lay.gravity = Gravity.END | Gravity.BOTTOM;
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                hizoClickEnElFAB();
+                            }
+                        });
+                        fab.setLayoutParams(lay);
 
-                    ((ViewGroup)findViewById(R.id.frame_para_el_fab)).addView(fab);
+                        ((ViewGroup) findViewById(R.id.frame_para_el_fab)).addView(fab);
+                    }
+                    else if(isOnline())
+                    anadirFragmentoPaquete(uid,fragMan,ll.getId());
                 }
                 break;
             case MARCE:
@@ -142,7 +153,48 @@ public class PerfilActivity extends AppCompatActivity {
                 break;
         }
 
+
+
     }
+
+    private void anadirFragmentoPaquete(String uid, final FragmentManager fm, final int container) {
+
+        final String keyFechavec= getString(R.string.paqueteFDB_fechadevec);
+        final String keyclasesVistas= getString(R.string.paqueteFDB_clases_vistas);
+        final String keyclasestotal= getString(R.string.paqueteFDB_clases_total);
+
+        DatabaseReference db=FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.nombre_clienteFDB)).child(uid)
+                .child(getString(R.string.nomble_paqueteFDB));
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int clasesTotal=dataSnapshot.child(keyclasestotal).getValue(Integer.class);
+                int clasesVistas=dataSnapshot.child(keyclasesVistas).getValue(Integer.class);
+                String fechavec= dataSnapshot.child(keyFechavec).getValue(String.class);
+                String contenido=FragmentoPaquete.PRE_DOSPUNTOS_CLASES_VISTAS+clasesVistas+"\n"
+                        +FragmentoPaquete.PRE_DOSPUNTOS_CLASES_TOTAL+clasesTotal+"\n"
+                        +FragmentoPaquete.PRE_DOSPUNTOS_FECHA_DE_VEC+fechavec;
+                ponerElContenido(contenido,fm,container);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void ponerElContenido(String contenido,FragmentManager fm, int container){
+        FragmentoPaquete fp= FragmentoPaquete.newInstance(contenido);
+        FragmentTransaction ft= fm.beginTransaction();
+        ft.add(container,fp);
+        ft.commit();
+    }
+
+
 
     public FragmentoDatos datosContacto(Bundle sp){
         String keycorreo = getString(R.string.db_correo);
@@ -182,7 +234,7 @@ public class PerfilActivity extends AppCompatActivity {
             contenido+= "\n"+ FragmentoDatos.PRE_DOSPUNTOS_EPS+eps;
         }
         if(!peso.equals(VALOR_PARA_SABER_SI_NO_TIENE_VALUE)){
-            contenido+= "\n"+ FragmentoDatos.PRE_DOSPUNTOS_EPS+peso;
+            contenido+= "\n"+ FragmentoDatos.PRE_DOSPUNTOS_PESO+peso;
         }
 
         return FragmentoDatos.newInstance(FragmentoDatos.POSIBLE_TITULO_INFO,contenido);
@@ -211,7 +263,9 @@ public class PerfilActivity extends AppCompatActivity {
                     DatabaseContractMarce.ClientesDB.COLUMN_DIRECCION,
                     DatabaseContractMarce.ClientesDB.COLUMN_TELEFONO,
                     DatabaseContractMarce.ClientesDB.COLUMN_CUMPLEANOS,
-                    DatabaseContractMarce.ClientesDB.COLUMN_SEGURO_MED
+                    DatabaseContractMarce.ClientesDB.COLUMN_SEGURO_MED,
+                    DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE
+
 
             };
             c=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,
@@ -341,8 +395,11 @@ public class PerfilActivity extends AppCompatActivity {
         public final static String PRE_DOSPUNTOS_GENERO ="Genero: ";
         public final static String PRE_DOSPUNTOS_DIRECCION ="Dirección: ";
 
+
+
         public final static String POSIBLE_TITULO_CONTACTO= "Datos contacto";
         public final static String POSIBLE_TITULO_INFO= "Datos";
+
         public static FragmentoDatos newInstance(String titulo, String contenido) {
             FragmentoDatos fragment= new FragmentoDatos();
 
@@ -380,6 +437,50 @@ public class PerfilActivity extends AppCompatActivity {
             return inflater.inflate(R.layout.fragmento_historial,container,false);
         }
     }
+
+    public static class FragmentoPaquete extends android.app.Fragment {
+
+        public static final String TITULO_PAQUETE = "Paquete";
+        private FragmentDatosContactoBinding binding;
+        private final static  String datosContenido= "cont";
+        private final static String Titulo="titul";
+        public final static String PRE_DOSPUNTOS_FECHA_DE_VEC ="Fecha de Vencimiento: ";
+        public final static String PRE_DOSPUNTOS_CLASES_VISTAS ="Clases Vistas: ";
+        public final static String PRE_DOSPUNTOS_CLASES_TOTAL ="Total clases paquete: ";
+        public static FragmentoPaquete newInstance(String contenido) {
+            FragmentoPaquete fragment= new FragmentoPaquete();
+
+            Bundle args = new Bundle();
+
+
+
+            args.putString(datosContenido,contenido);
+
+            args.putString(Titulo, TITULO_PAQUETE);
+
+            fragment.setArguments(args);
+
+            return fragment;
+        }
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+            binding = DataBindingUtil.inflate(inflater,R.layout.fragment_datos_contacto, container, false);
+            Bundle args= getArguments();
+            binding.datosTitulo.setText(args.getString(Titulo));
+            binding.datosContenido.setText(args.getString(datosContenido));
+            return binding.getRoot();
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
 
 
 }

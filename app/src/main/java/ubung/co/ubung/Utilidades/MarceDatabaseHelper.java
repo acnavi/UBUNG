@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MarceDatabaseHelper extends SQLiteOpenHelper {
 
     private final static String DATABASE_NAME="databaseMarce.db";
-    private final static int DATABASE_VERSION= 4;
+    private final static int DATABASE_VERSION= 5;
 
     public MarceDatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -89,6 +89,7 @@ public class MarceDatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContractMarce.ClientesDB.COLUMN_PESO + " INTEGER, "+
                 DatabaseContractMarce.ClientesDB.COLUMN_SEGURO_MED + " TEXT, " +
                 DatabaseContractMarce.ClientesDB.COLUMN_COMENTARIOS + " TEXT, "+
+                DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE + " INTEGER NOT NULL, "+
                 DatabaseContractMarce.ClientesDB.COLUMN_GENERO+ " TEXT);";
 
         db.execSQL(SQL_COMAND);

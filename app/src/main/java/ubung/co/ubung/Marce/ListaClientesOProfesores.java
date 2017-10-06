@@ -21,7 +21,9 @@ import ubung.co.ubung.Utilidades.MarceDatabaseHelper;
 public class ListaClientesOProfesores extends AppCompatActivity {
 
     public final static String KEY_ES_CLIENTE="escliente";
+    public final static String KEY_ES_CON_PAQUETE="esconPaq";
     private boolean esCliente;
+    private boolean esConPaquete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +48,17 @@ public class ListaClientesOProfesores extends AppCompatActivity {
 
         Intent i = getIntent();
         esCliente =i.getBooleanExtra(KEY_ES_CLIENTE,true);
-
+        esConPaquete=i.getBooleanExtra(KEY_ES_CON_PAQUETE,false);
 
         MarceDatabaseHelper helper= new MarceDatabaseHelper(getApplicationContext());
         SQLiteDatabase database= helper.getReadableDatabase();
         Cursor cursor;
         if(esCliente){
             String[] columns={DatabaseContractMarce.ClientesDB.COLUMN_UID, DatabaseContractMarce.ClientesDB.COLUMN_NOMBRE};
+            if(esConPaquete)
+                cursor=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,columns,
+                        DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE + " = "+1,null,null,null,null);
+            else
             cursor=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,columns,null,null,null,null,null);
         }
         else {

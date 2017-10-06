@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/frame_para_el_fab">
@@ -29,5 +29,5 @@
             android:fontFamily="sans-serif"
             android:id="@+id/perfil_tv_nombre"/>
     </LinearLayout>
-    </FrameLayout>
+    </ScrollView>
 </layout>

@@ -32,7 +32,7 @@ public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfes
     private Cursor database;
     private Activity context;
     private StorageReference foticos;
-    private boolean esCliente;
+//    private boolean esCliente;
 
     private final static String TAG="ClienteOProfesorAdapter";
     /*
@@ -45,7 +45,8 @@ public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfes
         context=c;
 
         foticos= FirebaseStorage.getInstance().getReference(context.getString(R.string.nomble_fotos_perfilSR));
-        esCliente=esC;
+//        esCliente=esC;
+
     }
     @Override
     public ClienteOProfesorHolder onCreateViewHolder(ViewGroup parent, int viewType) {

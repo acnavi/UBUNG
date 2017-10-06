@@ -456,6 +456,8 @@ public class DatabaseManager {
             String id= dataSnapshot.getKey();
             Cliente cliente = dataSnapshot.getValue(Cliente.class);
             ContentValues cv = databaseToContentValues(cliente, id);
+            int bool=dataSnapshot.child(context.getString(R.string.nomble_paqueteFDB)).exists()? 1:0;
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE,bool);
             long i=database.insert(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,null,cv);
             if(i==-1) Log.e(TAG,"hubo un superproblema, may day! added marcela clientes");
 
@@ -466,6 +468,10 @@ public class DatabaseManager {
             String id= dataSnapshot.getKey();
             Cliente cliente = dataSnapshot.getValue(Cliente.class);
             ContentValues cv = databaseToContentValues(cliente, id);
+
+            int bool=dataSnapshot.child(context.getString(R.string.nomble_paqueteFDB)).exists()? 1:0;
+            cv.put(DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE,bool);
+
             long i=database.update(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,cv,
                     DatabaseContractMarce.ClientesDB.COLUMN_UID +"=\""+id+"\"",null);
             if(i==-1) Log.e(TAG,"hubo un superproblema, may day! changed marce clientes");

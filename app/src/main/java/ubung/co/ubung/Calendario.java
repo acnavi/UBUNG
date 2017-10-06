@@ -255,6 +255,7 @@ public class Calendario extends AppCompatActivity
         if (id == R.id.menu_marce_clientes) {
             Intent i = new Intent(this, ListaClientesOProfesores.class);
             i.putExtra(ListaClientesOProfesores.KEY_ES_CLIENTE,true);
+            i.putExtra(ListaClientesOProfesores.KEY_ES_CON_PAQUETE,false);
             startActivity(i);
         } else if (id == R.id.menu_marce_profesores) {
             Intent i = new Intent(this, ListaClientesOProfesores.class);
@@ -266,7 +267,10 @@ public class Calendario extends AppCompatActivity
             startActivity(i);
 
         } else if (id == R.id.menu_marce_paquetes) {
-
+            Intent i = new Intent(this, ListaClientesOProfesores.class);
+            i.putExtra(ListaClientesOProfesores.KEY_ES_CLIENTE,true);
+            i.putExtra(ListaClientesOProfesores.KEY_ES_CON_PAQUETE,true);
+            startActivity(i);
 
         } else if (id == R.id.nav_cerrar_sesion) {
             cerrarSecion();
