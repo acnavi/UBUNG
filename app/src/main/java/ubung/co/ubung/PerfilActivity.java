@@ -69,8 +69,10 @@ public class PerfilActivity extends AppCompatActivity {
     public final static String BUNDLE_KEY_ES_EDITABLE = "eseditable";
     public final static String BUNDLE_KEY_BUNDLE_INFO = "SHAREDNOMBRE";
     public final static String BUNDLE_KEY_ID_PARA_FOTO = "lefote";
+    public final static String BUNDLE_KEY_ES_SOLICITUD = "essol";
 
-    private boolean esEditable;
+    private boolean esEditable,esSolicitud;
+
 
     private DatabaseReference userDataBase;
     @Override
@@ -94,6 +96,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         String uid =i.getStringExtra(BUNDLE_KEY_ID_PARA_FOTO);
 
+        esSolicitud=i.getBooleanExtra(BUNDLE_KEY_ES_SOLICITUD,false);
 
         String nombre = info.getString(getString(R.string.db_nombre),"");
 
@@ -109,7 +112,7 @@ public class PerfilActivity extends AppCompatActivity {
                     .into(cv);
 
 
-        DatabaseManager.TipoAplicacion tipo = DatabaseManager.TipoAplicacion.tipoPorString(tipoS);
+
 
         FragmentManager fragMan = getFragmentManager();
         FragmentTransaction fragTransaction = fragMan.beginTransaction();
@@ -118,41 +121,43 @@ public class PerfilActivity extends AppCompatActivity {
         fragTransaction.commit();
         //TODO: cuaando tenga info sobre las clase aca se ve si se llena con un historial o con clase dictadas
         userDataBase= FirebaseDatabase.getInstance().getReference();
-        switch (tipo){
-            case CLIENTE:
-                userDataBase=userDataBase.child(getString(R.string.nombre_clienteFDB)).child(uid);
-                if(esEditable){
-                    boolean bool= 1==info.getInt(DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE,0);
-                    if(!bool) {
-                        FloatingActionButton fab = new FloatingActionButton(this);
-                        fab.setSize(FloatingActionButton.SIZE_NORMAL);
-                        fab.setImageResource(R.drawable.ic_mas_24dp);
-                        fab.setFocusable(true);
 
-                        FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        lay.gravity = Gravity.END | Gravity.BOTTOM;
-                        fab.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                hizoClickEnElFAB();
-                            }
-                        });
-                        fab.setLayoutParams(lay);
+        if(!esSolicitud) {
+            DatabaseManager.TipoAplicacion tipo = DatabaseManager.TipoAplicacion.tipoPorString(tipoS);
+            switch (tipo) {
+                case CLIENTE:
+                    userDataBase = userDataBase.child(getString(R.string.nombre_clienteFDB)).child(uid);
+                    if (esEditable) {
+                        boolean bool = 1 == info.getInt(DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE, 0);
+                        if (!bool) {
+                            FloatingActionButton fab = new FloatingActionButton(this);
+                            fab.setSize(FloatingActionButton.SIZE_NORMAL);
+                            fab.setImageResource(R.drawable.ic_mas_24dp);
+                            fab.setFocusable(true);
 
-                        ((ViewGroup) findViewById(R.id.frame_para_el_fab)).addView(fab);
+                            FrameLayout.LayoutParams lay = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            lay.gravity = Gravity.END | Gravity.BOTTOM;
+                            fab.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    hizoClickEnElFAB();
+                                }
+                            });
+                            fab.setLayoutParams(lay);
+
+                            ((ViewGroup) findViewById(R.id.frame_para_el_fab)).addView(fab);
+                        } else if (isOnline())
+                            anadirFragmentoPaquete(uid, fragMan, ll.getId());
                     }
-                    else if(isOnline())
-                    anadirFragmentoPaquete(uid,fragMan,ll.getId());
-                }
-                break;
-            case MARCE:
+                    break;
+                case MARCE:
 
-                break;
-            case PROFE:
+                    break;
+                case PROFE:
 
-                break;
+                    break;
+            }
         }
-
 
 
     }
@@ -480,7 +485,6 @@ public class PerfilActivity extends AppCompatActivity {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-
 
 
 }

@@ -1,8 +1,11 @@
 package ubung.co.ubung.Marce;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -57,7 +60,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
     private final static String TAG="SolicitudesAdapter";
    // private final ValueEventListener valueEventListener;
 
-    private static Context context;
+    private static SolocitudesClientesActivity context;
 
 
 
@@ -67,7 +70,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
 
 
-    public SolicitudesAdapter(Context c){
+    public SolicitudesAdapter(SolocitudesClientesActivity c){
 
         context=c;
 
@@ -171,6 +174,12 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
             aceptar.setOnClickListener(SolicitudesViewHolder.this);
             rechaButton.setOnClickListener(SolicitudesViewHolder.this);
             tieneFoto=false;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickEnHolder(uid);
+                }
+            });
         }
 
         public void onClick(View v) {
@@ -248,6 +257,8 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
         }
 
+
+
         public void solicitudResuelta(String uid){
             solicitudesDB.child(uid).removeValue();
 
@@ -256,6 +267,27 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
     }
 
 
+
+    public void clickEnHolder(final String uid){
+        final Bundle bundle = new Bundle();
+        solicitudesDB.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    String key =ds.getKey();
+                    if(!(key.equals(context.getString(R.string.db_sol_contrasena))|| key.equals(context.getString(R.string.db_foto)))){
+                        bundle.putString(key,ds.getValue(String.class));
+                    }
+                    context.lanzarPerfil(bundle,uid);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     /**
      * Agrega un nuevo usuario sin cerrar secion de Marce o cualquiera con poder supremo.
