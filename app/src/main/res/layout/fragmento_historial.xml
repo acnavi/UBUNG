@@ -14,7 +14,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:textColor="#818181"
-            android:textSize="21sp"
+            android:textSize="@dimen/letra_datos"
             tools:text="Datos" />
 
        <android.support.v7.widget.RecyclerView

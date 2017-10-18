@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="moradoProvicional">#7c01e6</color>
+
+    <color name="morado">#72408d</color>
+    <color name="morado_prelog">#5a5896</color>
     <color name="blanco_tranparentoso">#80FFFFFF</color>
     <color name="blanco">#FFFFFF</color>
+    <color name="separadores">#e0e0df</color>
+    <color name="fondo_gris">#eeeeee</color>
 
     <!--Colores casillas clases-->
     <!--TODO: cambiar los colores de abajo-->

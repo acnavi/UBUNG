@@ -96,17 +96,25 @@
     <!--Estados clase clientes-->
 
     <!--Dias calendario-->
-    <string name="lunes">lun.</string>
-    <string name="martes">mar.</string>
-    <string name="miercoles">mier.</string>
-    <string name="jueves">jue.</string>
-    <string name="viernes">vie.</string>
-    <string name="sabado">sab.</string>
+    <string name="lunesab">lun.</string>
+    <string name="martesab">mar.</string>
+    <string name="miercolesab">mier.</string>
+    <string name="juevesab">jue.</string>
+    <string name="viernesab">vie.</string>
+    <string name="sabadoab">sab.</string>
+    <string name="lunes">Lunes</string>
+    <string name="martes">Martes</string>
+    <string name="miercoles">Miercoles</string>
+    <string name="jueves">Jueves</string>
+    <string name="viernes">Viernes</string>
+    <string name="sabado">Sabado</string>
     <!--Dias-->
 
     <!--Cosas a traducir-->
     <string name="problema_inic_secion_title">Inicio Secion</string>
     <string name="problema_inic_secion_message">Hubo un problema al iniciar secion. Vuelve a intentarlo más tarde.</string>
+    <string name="fisioterapia">Fisioterapia</string>
+    <string name="pilates">Pilates</string>
     <!--Cosas a traducir-->
 
     <!--Toolbar menus-->

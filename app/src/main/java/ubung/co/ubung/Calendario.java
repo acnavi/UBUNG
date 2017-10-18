@@ -2,6 +2,11 @@ package ubung.co.ubung;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -78,8 +83,7 @@ public class Calendario extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                clickEnElFab();
             }
         });
 
@@ -112,6 +116,7 @@ public class Calendario extends AppCompatActivity
                 m.setGroupVisible(R.id.menu_marcela,true);
                 m.setGroupVisible(R.id.menu_clientesyprofes,false);
                 refUsuario=refUsuario.child(getString(R.string.nomble_profesoresFDB)).child(userUid);
+
                 break;
             case CLIENTE:
                 m.setGroupVisible(R.id.menu_marcela,false);
@@ -331,4 +336,11 @@ public class Calendario extends AppCompatActivity
         }
         return retornar;
     }
+
+    private void clickEnElFab(){
+        Intent i= new Intent(this, CrearClaseActivity.class);
+        startActivity(i);
+    }
+
+
 }

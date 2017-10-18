@@ -9,15 +9,16 @@
             android:title="@string/toolbarmenu_marce_solicitudes" />
         <item
             android:id="@+id/menu_marce_clientes"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_clientes_android"
             android:title="@string/toolbarmenu_marce_clientes" />
         <item
             android:id="@+id/menu_marce_paquetes"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/toolbarmenu_marce_paquetes" />
+            android:icon="@drawable/ic_paquete2"
+            android:title="@string/toolbarmenu_marce_paquetes"
+            />
         <item
             android:id="@+id/menu_marce_profesores"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_profesores24"
             android:title="@string/toolbarmenu_marce_profesores" />
         <item android:id="@+id/menu_marce_generar_reporte"
             android:icon="@drawable/ic_generar_reporte"

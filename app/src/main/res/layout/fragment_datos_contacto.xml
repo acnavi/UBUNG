@@ -15,7 +15,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:textColor="#818181"
-            android:textSize="21sp"
+            android:textSize="@dimen/letra_datos"
             tools:text="Datos"
             android:id="@+id/datos_titulo"/>
 
@@ -26,7 +26,9 @@
             tools:text="Edad: 35 años \nPeso: 68 kg"
             android:textColor="#000000"
             android:paddingLeft="35dp"
-            android:textSize="21sp"
+            android:paddingBottom="@dimen/margen_blanca_datos"
+            android:paddingTop="@dimen/margen_blanca_datos"
+            android:textSize="@dimen/letra_datos"
             android:fontFamily="sans-serif"
             android:id="@+id/datos_contenido"/>
     </LinearLayout>

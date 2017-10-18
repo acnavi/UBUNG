@@ -37,7 +37,7 @@ public class ClientesDatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContractClientes.ClasesFuturasDB._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 DatabaseContractClientes.ClasesFuturasDB.COLUMN_FECHA+" TEXT NOT NULL, "+
                 DatabaseContractClientes.ClasesFuturasDB.COLUMN_HORA+" INTEGER NOT NULL, " +
-                DatabaseContractClientes.ClasesFuturasDB.ESTADO + " TEXT NOT NULL, );";
+                DatabaseContractClientes.ClasesFuturasDB.ESTADO + " TEXT NOT NULL);";
 
         db.execSQL(SQL_COMAND);
 

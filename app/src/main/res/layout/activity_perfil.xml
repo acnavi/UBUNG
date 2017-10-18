@@ -5,7 +5,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/frame_para_el_fab">
+        android:id="@+id/frame_para_el_fab"
+        android:background="@color/fondo_gris">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,11 +18,12 @@
         android:id="@+id/list_view_perfil">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/fotico_perfil"
+            android:layout_height="@dimen/fotico_perfil"
             android:layout_gravity="center_horizontal"
             app:civ_border_width="0dp"
-            android:id="@+id/perfil_foto"/>
+            android:id="@+id/perfil_foto"
+            android:layout_margin="23dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +31,7 @@
             tools:text="Luna Montes"
             android:textColor="#000000"
             android:paddingLeft="35dp"
-            android:textSize="21sp"
+            android:textSize="@dimen/nombre_datos"
             android:fontFamily="sans-serif"
             android:id="@+id/perfil_tv_nombre"/>
     </LinearLayout>

@@ -5,4 +5,15 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="margen_foticos">10dp</dimen>
+
+    <dimen name="ancho_foto_holder">70dp</dimen>
+
+    <dimen name="fotico_perfil">140dp</dimen>
+
+    <dimen name="letra_datos">17sp</dimen>
+    <dimen name="nombre_datos">20sp</dimen>
+    <dimen name="margen_blanca_datos">4dp</dimen>
+
 </resources>

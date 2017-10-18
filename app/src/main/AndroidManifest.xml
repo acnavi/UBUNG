@@ -42,14 +42,19 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PerfilActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".Marce.ListaClientesOProfesores"
             android:label="@string/title_activity_lista_clientes_oprofesores"
             android:parentActivityName=".Calendario"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ubung.co.ubung.Calendario" />
+        </activity>
+        <activity android:name=".CrearClaseActivity"
+            android:parentActivityName=".Calendario">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ubung.co.ubung.Calendario" />

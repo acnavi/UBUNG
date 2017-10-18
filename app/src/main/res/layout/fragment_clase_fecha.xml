@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/f_clase_fecha_numero"
+        android:layout_width="96dp"
+        android:layout_height="41dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="44sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="13"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.3" />
+
+    <TextView
+        android:id="@+id/f_clase_fecha_dia_de_la_sem"
+        android:layout_width="44dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:text="TextView"
+        app:layout_constraintLeft_toRightOf="@+id/f_clase_fecha_numero"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/f_clase_fecha_numero"
+        tools:text="Martes"
+        app:layout_constraintHorizontal_bias="0.12" />
+
+    <TextView
+        android:id="@+id/f_clase_fecha_mes_y_ano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/f_clase_fecha_numero"
+        app:layout_constraintLeft_toLeftOf="@+id/f_clase_fecha_dia_de_la_sem"
+        tools:text="Junio 2017" />
+</android.support.constraint.ConstraintLayout>

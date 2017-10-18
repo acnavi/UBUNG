@@ -3,16 +3,16 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#72408d</item>
-        <item name="colorPrimaryDark">#72408d</item>
-        <item name="colorAccent">#72408d</item>
+        <item name="colorPrimary">@color/morado</item>
+        <item name="colorPrimaryDark">@color/morado</item>
+        <item name="colorAccent">@color/morado</item>
     </style>
 
     <style name="PreLoginTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#72408d</item>
-        <item name="colorPrimaryDark">#5a5896</item>
-        <item name="colorAccent">#72408d</item>
+        <item name="colorPrimary">@color/morado</item>
+        <item name="colorPrimaryDark">@color/morado_prelog</item>
+        <item name="colorAccent">@color/morado</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
