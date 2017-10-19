@@ -2,6 +2,7 @@ package ubung.co.ubung;
 
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -70,14 +72,26 @@ public class CrearClaseActivity extends AppCompatActivity {
     }
 
 public static class FragmentoHora extends Fragment{
+    int hora,minutos;
+    TextView tv;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_clase_hora,container,false);
+        tv= (TextView) v.findViewById(R.id.f_clase_hora_tv);
+        hora=((CrearClaseActivity)getActivity()).hora;
+        minutos=((CrearClaseActivity)getActivity()).minutos;
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"hicieronClickEnHora",Toast.LENGTH_LONG).show();
+                TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        tv.setText(hourOfDay+":"+minute);
+                    }
+                };
+                TimePickerDialog dialog= new TimePickerDialog(getContext(),listener,hora,minutos,true);
+                dialog.show();
             }
         });
         return v;

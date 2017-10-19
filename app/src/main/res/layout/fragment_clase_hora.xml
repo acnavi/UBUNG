@@ -8,5 +8,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     tools:text="9:00AM"
+    android:id="@+id/f_clase_hora_tv"
     />
 </FrameLayout>
