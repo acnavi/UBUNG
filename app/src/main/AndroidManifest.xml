@@ -53,12 +53,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ubung.co.ubung.Calendario" />
         </activity>
-        <activity android:name=".CrearClaseActivity"
+        <activity
+            android:name=".CrearClaseActivity"
             android:parentActivityName=".Calendario">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ubung.co.ubung.Calendario" />
         </activity>
+        <activity
+            android:name=".Marce.PreferenciasActivity"
+            android:exported="true" />
+        <activity android:name=".Marce.SemanaGenericaActivity"></activity>
     </application>
 
 </manifest>

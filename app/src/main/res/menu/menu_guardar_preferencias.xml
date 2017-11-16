@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/guardar"
+        android:icon="@drawable/ic_save"
+        android:id="@+id/menu_preferencias_guardar"/>
+</menu>

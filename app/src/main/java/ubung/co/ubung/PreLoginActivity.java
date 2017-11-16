@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import ubung.co.ubung.Utilidades.DatabaseManager;
 //TODO: RESOLVER EL PROBLEMADEL BOTON HACIA ATRAS.
 
@@ -349,10 +351,11 @@ public class PreLoginActivity extends AppCompatActivity {
                 }
 
                 else if(current==4){
-
-                    if(esHombre==null){ Toast.makeText(this,"Debes seleccionar tu genero.",Toast.LENGTH_LONG).show();
+                    String s=String.valueOf(fs.spinner_h_m.getSelectedItem());
+                    if(s==null){ Toast.makeText(this,"Debes seleccionar tu genero.",Toast.LENGTH_LONG).show();
                     return;}
-                    if(!esHombre[0]){
+                    String[] ss=getResources().getStringArray(R.array.hombre_mujer);
+                    if(s.equals(ss[1])){
                         params[2]=GENERO_MUJER;
                     }
                     else params[2]=GENERO_HOMBRE;
@@ -542,6 +545,7 @@ public class PreLoginActivity extends AppCompatActivity {
 
 
 
+    private FragmentoSexo fs;
 
     public class AdapterFragment extends FragmentPagerAdapter{
 
@@ -579,7 +583,8 @@ public class PreLoginActivity extends AppCompatActivity {
 
                 case 4:
 
-                    return new FragmentoSexo();
+                    fs= new FragmentoSexo();
+                    return fs;
 
 
 
@@ -752,7 +757,7 @@ public class PreLoginActivity extends AppCompatActivity {
 
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View view =inflater.inflate(R.layout.registro_cuenta_foto,container,false);
-            ImageButton imageButton= (ImageButton) view.findViewById(R.id.registrarse_image_foto);
+            CircleImageView imageButton= (CircleImageView) view.findViewById(R.id.registrarse_image_foto);
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -796,34 +801,37 @@ public class PreLoginActivity extends AppCompatActivity {
         }
         FrameLayout mujerB;
         FrameLayout hombreB;
+        Spinner spinner_h_m;
 
         @Nullable
         @Override
 
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View v =inflater.inflate(R.layout.registro_cuenta_genero,container,false);
-             mujerB= (FrameLayout) v.findViewById(R.id.boton_mujer);
-            hombreB= (FrameLayout) v.findViewById(R.id.boton_hombre);
-            mujerB.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (esHombre==null) esHombre= new boolean[1];
-                    seleccionarBoton(mujerB);
-                    desSeleccionarBoton(hombreB);
-                    esHombre[0]=false;
+//             mujerB= (FrameLayout) v.findViewById(R.id.boton_mujer);
+//            hombreB= (FrameLayout) v.findViewById(R.id.boton_hombre);
+            spinner_h_m = (Spinner) v.findViewById(R.id.hombre_mujer_spinner);
 
-                }
-            });
-            hombreB.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (esHombre==null) esHombre= new boolean[1];
-                    desSeleccionarBoton(mujerB);
-                    seleccionarBoton(hombreB);
-                    esHombre[0]=true;
-
-                }
-            });
+//            mujerB.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (esHombre==null) esHombre= new boolean[1];
+//                    seleccionarBoton(mujerB);
+//                    desSeleccionarBoton(hombreB);
+//                    esHombre[0]=false;
+//
+//                }
+//            });
+//            hombreB.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (esHombre==null) esHombre= new boolean[1];
+//                    desSeleccionarBoton(mujerB);
+//                    seleccionarBoton(hombreB);
+//                    esHombre[0]=true;
+//
+//                }
+//            });
             return v;
         }
     }

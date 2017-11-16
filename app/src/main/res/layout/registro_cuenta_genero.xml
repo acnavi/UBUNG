@@ -1,42 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
-    <FrameLayout
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/boton_hombre">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/caja_blanca_pseudotransparente"
+        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:id="@+id/boton_hombre">-->
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            app:srcCompat="@mipmap/ic_launcher" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Hombre"
-            android:text="@string/registrarse_genero_hombre"
-            android:layout_gravity="center_horizontal|bottom"/>
-    </FrameLayout>
-    <FrameLayout
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal|top"-->
+            <!--app:srcCompat="@mipmap/ic_launcher" />-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:text="Hombre"-->
+            <!--android:text="@string/registrarse_genero_hombre"-->
+            <!--android:layout_gravity="center_horizontal|bottom"/>-->
+
+    <!--</FrameLayout>-->
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:id="@+id/boton_mujer">-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal|top"-->
+            <!--app:srcCompat="@drawable/ic_pilates_morado" />-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/registrarse_genero_mujer"-->
+            <!--android:layout_gravity="center_horizontal|bottom"/>-->
+    <!--</FrameLayout>-->
+<!--</LinearLayout>-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tamano_letra_login"
+        android:layout_margin="@dimen/activity_login_margin"
+        android:text="Genero:" />
+    <Spinner
+        android:id="@+id/hombre_mujer_spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/boton_mujer">
+        android:layout_height="wrap_content"
+        android:entries="@array/hombre_mujer"
+        android:layout_marginTop="@dimen/activity_login_margin"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            app:srcCompat="@drawable/ic_pilates_morado" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/registrarse_genero_mujer"
-            android:layout_gravity="center_horizontal|bottom"/>
-    </FrameLayout>
-</LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

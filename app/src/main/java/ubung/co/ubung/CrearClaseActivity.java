@@ -87,7 +87,9 @@ public static class FragmentoHora extends Fragment{
                 TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        tv.setText(hourOfDay+":"+minute);
+                        String enLaMitad=":";
+                        if(minute<10)  enLaMitad+=0;
+                        tv.setText(hourOfDay+enLaMitad+minute);
                     }
                 };
                 TimePickerDialog dialog= new TimePickerDialog(getContext(),listener,hora,minutos,true);

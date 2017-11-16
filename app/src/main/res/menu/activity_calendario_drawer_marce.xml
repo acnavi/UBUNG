@@ -4,6 +4,10 @@
     <group android:checkableBehavior="single"
         android:id="@+id/menu_marcela">
         <item
+            android:id="@+id/menu_marce_calendario"
+            android:icon="@drawable/ic_calendario_gris"
+            android:title="@string/toolbarmenu_marce_calendario" />
+        <item
             android:id="@+id/menu_marce_solicitudes"
             android:icon="@drawable/ic_solicitudes"
             android:title="@string/toolbarmenu_marce_solicitudes" />
@@ -18,7 +22,7 @@
             />
         <item
             android:id="@+id/menu_marce_profesores"
-            android:icon="@drawable/ic_profesores24"
+            android:icon="@drawable/ic_drawer_profesores"
             android:title="@string/toolbarmenu_marce_profesores" />
         <item android:id="@+id/menu_marce_generar_reporte"
             android:icon="@drawable/ic_generar_reporte"

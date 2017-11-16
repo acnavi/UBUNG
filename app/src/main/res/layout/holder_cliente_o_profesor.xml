@@ -9,18 +9,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="@dimen/ancho_foto_holder"
-        android:layout_height="@dimen/ancho_foto_holder"
-        app:civ_border_width="0dp"
-        android:id="@+id/holder_cop_iv"
-        android:layout_margin="@dimen/margen_foticos"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/ancho_foto_holder"
+                android:layout_height="@dimen/ancho_foto_holder"
+                app:civ_border_width="0dp"
+                android:id="@+id/holder_cop_iv_mientras"
+                android:src="@drawable/ic_fsf_gris"
+                android:layout_margin="@dimen/margen_foticos"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/ancho_foto_holder"
+                android:layout_height="@dimen/ancho_foto_holder"
+                app:civ_border_width="0dp"
+                android:id="@+id/holder_cop_iv"
+                android:layout_margin="@dimen/margen_foticos"/>
+        </FrameLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Paula Pinto"
         android:layout_gravity="center_vertical"
-        android:id="@+id/holder_cop_tv"/>
+        android:id="@+id/holder_cop_tv"
+        android:textSize="@dimen/tamano_nombre_lista"/>
 
 </LinearLayout>
 <View

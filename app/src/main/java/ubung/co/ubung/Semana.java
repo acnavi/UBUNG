@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.Date;
 
@@ -56,7 +57,6 @@ public class Semana extends Fragment {
 
      * @return A new instance of fragment Semana.
      */
-    // TODO: Rename and change types and number of parameters
     public static Semana newInstance(int lun, int dias) {
         Semana fragment = new Semana();
 
@@ -91,15 +91,21 @@ public class Semana extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
-        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_semana, container, false);
-        binding.semanaTvDiaLun.setText(""+todosLosNumeros[0]);
-        binding.semanaTvDiaMar.setText(""+todosLosNumeros[1]);
-        binding.semanaTvDiaMier.setText(""+todosLosNumeros[2]);
-        binding.semanaTvDiaJue.setText(""+todosLosNumeros[3]);
-        binding.semanaTvDiaVie.setText(""+todosLosNumeros[4]);
-        binding.semanaTvDiaSab.setText(""+todosLosNumeros[5]);
-        View v=binding.getRoot();
+        View v=inflater.inflate(R.layout.fragment_semana,container,false);
+        ((TextView)v.findViewById(R.id.semana_tv_dia_lun)).setText(""+todosLosNumeros[0]);
+        ((TextView)v.findViewById(R.id.semana_tv_dia_mar)).setText(""+todosLosNumeros[1]);
+        ((TextView)v.findViewById(R.id.semana_tv_dia_mier)).setText(""+todosLosNumeros[2]);
+        ((TextView)v.findViewById(R.id.semana_tv_dia_jue)).setText(""+todosLosNumeros[3]);
+        ((TextView)v.findViewById(R.id.semana_tv_dia_vie)).setText(""+todosLosNumeros[4]);
+        ((TextView)v.findViewById(R.id.semana_tv_dia_sab)).setText(""+todosLosNumeros[5]);
+//        binding= DataBindingUtil.inflate(inflater,R.layout.fragment_semana, container, false);
+//        binding.semanaTvDiaLun.setText(""+todosLosNumeros[0]);
+//        binding.semanaTvDiaMar.setText(""+todosLosNumeros[1]);
+//        binding.semanaTvDiaMier.setText(""+todosLosNumeros[2]);
+//        binding.semanaTvDiaJue.setText(""+todosLosNumeros[3]);
+//        binding.semanaTvDiaVie.setText(""+todosLosNumeros[4]);
+//        binding.semanaTvDiaSab.setText(""+todosLosNumeros[5]);
+//        View v=binding.getRoot();
         return  v;
     }
 

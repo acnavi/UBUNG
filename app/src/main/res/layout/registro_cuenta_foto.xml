@@ -12,12 +12,12 @@
         android:layout_gravity="start|top"
         android:text="@string/registrarse_foto"/>
 
-    <ImageButton
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/registrarse_image_foto"
         android:layout_width="164dp"
         android:layout_height="164dp"
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/circulito_de_foto"
-        app:srcCompat="@drawable/ic_portrait_black_24dp"
+        android:src="@drawable/ic_foto_sin_foto"
         android:scaleType="centerCrop"/>
 </FrameLayout>

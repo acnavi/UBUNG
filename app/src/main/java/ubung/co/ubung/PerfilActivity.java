@@ -37,6 +37,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -108,6 +111,22 @@ public class PerfilActivity extends AppCompatActivity {
             Glide.with(this)
                     .using(new FirebaseImageLoader())
                     .load(refFotico)
+                    .listener(new RequestListener<StorageReference, GlideDrawable>() {
+                        final CircleImageView circleImageView= (CircleImageView) PerfilActivity.this.findViewById(R.id.mientrasCarga);
+                        final CircleImageView circleImageViewCool= (CircleImageView) PerfilActivity.this.findViewById(R.id.perfil_foto);
+                @Override
+                public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
+
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    circleImageView.setVisibility(View.GONE);
+                    circleImageViewCool.setVisibility(View.VISIBLE);
+                    return false;
+                }
+            })
                     .dontAnimate()
                     .into(cv);
 
@@ -234,7 +253,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         String contenido = FragmentoDatos.PRE_DOSPUNTOS_GENERO+ genero+"\n"
                 + FragmentoDatos.PRE_DOSPUNTOS_EDAD + edad+"\n"
-                + FragmentoDatos.PRE_DOSPUNTOS_CUMPLE + cumple;
+                + FragmentoDatos.PRE_DOSPUNTOS_CUMPLE + cumple +" " + getString(R.string.anos);
         if(!eps.equals(VALOR_PARA_SABER_SI_NO_TIENE_VALUE)){
             contenido+= "\n"+ FragmentoDatos.PRE_DOSPUNTOS_EPS+eps;
         }

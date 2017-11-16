@@ -9,8 +9,8 @@
     <string name="action_settings">Settings</string>
     <!-- Inicio de Sesion -->
     <string name="registrarse_correo_label">Correo:</string>
-    <string name="registrarse_genero_label">Genero:</string>
-    <string name="registrarse_telefono_label">Telefono:</string>
+    <string name="registrarse_genero_label">Género:</string>
+    <string name="registrarse_telefono_label">Teléfono:</string>
     <string name="registrarse_contrasena_label">Contraseña:</string>
     <string name="registrarse_nombre_label">Nombre:</string>
     <string name="registrarse_contrasena2">Repite la contraseña:</string>
@@ -19,7 +19,7 @@
     <string name="registrarse_genero_hombre">Hombre</string>
     <string name="registrarse_genero_mujer">Mujer</string>
 
-    <string name="registrarse_texto_boton_inic_sec">Inicia Seccion</string>
+    <string name="registrarse_texto_boton_inic_sec">Iniciar Sesión</string>
     <string name="registrarse_texto_boton_regis">Registrarse</string>
     <string name="registrarse_texto_boton_ya_tienes_cuenta">Ya tengo cuenta</string>
     <string name="registrarse_texto_boton_siguiente">Siguiente</string>
@@ -60,6 +60,7 @@
     <string name="paqueteFDB_fechadevec" translatable="false">fecha de vec</string>
 
     <string name="nombre_solicitudedFDB" translatable="false">solicitudes</string>
+
     <string name="nombre_clienteFDB" translatable="false">clientes</string>
     <string name="nomble_profesoresFDB" translatable="false">profesores</string>
 
@@ -80,6 +81,18 @@
     <string name="db_comentarios" translatable="false">comentarios</string>
     <string name="db_id" translatable="false">ID</string>
 
+
+    <string name="nombre_preferenciasFDB" translatable="false">preferencias</string>
+    <string name="db_preferencias_cantAlmnos_por_clase" translatable="false">alum_por_clas</string>
+    <string name="db_preferencias_cantAlmnos_por_clase_fisio" translatable="false">alum_por_clas_fisio</string>
+    <string name="db_preferencias_cant_clases" translatable="false">cantidad_clases</string>
+    <string name="db_preferencias_cant_semanas" translatable="false">cantidad_semanas</string>
+    <string name="db_preferencias_cant_horas_reserv" translatable="false">cantidad_horas_reserv</string>
+    <string name="db_preferencias_cant_horas_cancelar" translatable="false">cantidad_horas_cancelar</string>
+    <string name="db_preferencias_hora_inicio_entre_sem" translatable="false">hora_init_entre_semana</string>
+    <string name="db_preferencias_hora_fin_entre_sem" translatable="false">hora_fin_entre_semana</string>
+    <string name="db_preferencias_hora_inicio_sab" translatable="false">hora_init_sab</string>
+    <string name="db_preferencias_hora_fin_sab" translatable="false">hora_fin_sab</string>
 
     <!--Basededatos-->
 
@@ -111,10 +124,11 @@
     <!--Dias-->
 
     <!--Cosas a traducir-->
-    <string name="problema_inic_secion_title">Inicio Secion</string>
-    <string name="problema_inic_secion_message">Hubo un problema al iniciar secion. Vuelve a intentarlo más tarde.</string>
+    <string name="problema_inic_secion_title">Inicio Sesion</string>
+    <string name="problema_inic_secion_message">Hubo un problema al iniciar sesión. Vuelve a intentarlo más tarde.</string>
     <string name="fisioterapia">Fisioterapia</string>
     <string name="pilates">Pilates</string>
+    <string name="guardar">Guardar</string>
     <!--Cosas a traducir-->
 
     <!--Toolbar menus-->
@@ -126,6 +140,7 @@
     <string name="toolbarmenu_marce_clientes">Clientes</string>
     <string name="toolbarmenu_marce_solicitudes">Solicitudes</string>
     <string name="toolbarmenu_marce_paquetes">Paquetes</string>
+    <string name="toolbarmenu_marce_calendario">Calendario</string>
     <string name="toolbarmenu_marce_generar_reporte">Generar Reporte</string>
     <string name="title_activity_lista_clientes_oprofesores">ListaClientesOProfesores</string>
     <!--Marce-->
@@ -133,5 +148,31 @@
 
     <!--Profe-->
 
+    <!--Mensajes pop-ups-->
+    <string name="boton_guardar_preferencias">Guardar</string>
+    <string name="boton_descartar_preferencias">Descartar</string>
+    <string name="boton_cancelar_cerrar_secion">Cancelar</string>
+    <string name="boton_aceptar_cerrar_secion">Aceptar</string>
+
+    <!--Palabras nada mas-->
+    <string name="anos">años</string>
     <!--Toolbar menus-->
+
+    <string-array name="hombre_mujer">
+        <item>Hombre</item>
+        <item>Mujer</item>
+    </string-array>
+
+    <!--PreferenciasActivity-->
+    <string name="PrefAct_texto_cantidadEstudiantes">Cantidad estudiantes por clase</string>
+    <string name="PrefAct_texto_cantidadFisioterapia">Cantidad estudiantes por fisioterapia</string>
+    <string name="PrefAct_texto_cantidadClases">Cantidad clases</string>
+    <string name="PrefAct_texto_cantidadSemanas">Cantidad semanas</string>
+    <string name="PrefAct_texto_cantidadHorasReserva">Horas para reservar</string>
+    <string name="PrefAct_texto_cantidadHorasCancelar">Horas para cancelar</string>
+    <string name="PrefAct_texto_horasInicioEntreSem">Hora inicial Lunes a Viernes</string>
+    <string name="PrefAct_texto_horasFinalEntreSem">Hora final Lunes a Viernes</string>
+    <string name="PrefAct_texto_horasInicioSab">Hora inicial Sabado</string>
+    <string name="PrefAct_texto_horasFinalSab">Hora final Sabado</string>
+
 </resources>

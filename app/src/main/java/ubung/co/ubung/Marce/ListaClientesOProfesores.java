@@ -3,6 +3,7 @@ package ubung.co.ubung.Marce;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,7 +43,7 @@ public class ListaClientesOProfesores extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView solicitudesRView = (RecyclerView) findViewById(R.id.clientes_o_profes_recycler_view);
+        final RecyclerView solicitudesRView = (RecyclerView) findViewById(R.id.clientes_o_profes_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         solicitudesRView.setLayoutManager(layoutManager);
 
@@ -50,24 +51,43 @@ public class ListaClientesOProfesores extends AppCompatActivity {
         esCliente =i.getBooleanExtra(KEY_ES_CLIENTE,true);
         esConPaquete=i.getBooleanExtra(KEY_ES_CON_PAQUETE,false);
 
-        MarceDatabaseHelper helper= new MarceDatabaseHelper(getApplicationContext());
-        SQLiteDatabase database= helper.getReadableDatabase();
-        Cursor cursor;
-        if(esCliente){
-            String[] columns={DatabaseContractMarce.ClientesDB.COLUMN_UID, DatabaseContractMarce.ClientesDB.COLUMN_NOMBRE};
-            if(esConPaquete)
-                cursor=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,columns,
-                        DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE + " = "+1,null,null,null,null);
-            else
-            cursor=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,columns,null,null,null,null,null);
-        }
-        else {
-            String[] columns={DatabaseContractMarce.ProfesoresDB.COLUMN_UID, DatabaseContractMarce.ProfesoresDB.COLUMN_NOMBRE};
-            cursor=database.query(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,columns,null,null,null,null,null);
-        }
+        AsyncTask<Boolean, Void, Cursor> at=new AsyncTask<Boolean, Void, Cursor>() {
+            boolean esCli;
+            boolean eCP;
+            @Override
+            protected Cursor doInBackground(Boolean... params) {
+                esCli=params[0];
+                eCP=params[1];
+                MarceDatabaseHelper helper= new MarceDatabaseHelper(getApplicationContext());
+                SQLiteDatabase database= helper.getReadableDatabase();
+                Cursor cursor;
+                if(esCli){
+                    String[] columns={DatabaseContractMarce.ClientesDB.COLUMN_UID, DatabaseContractMarce.ClientesDB.COLUMN_NOMBRE};
+                    if(eCP)
+                        cursor=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,columns,
+                                DatabaseContractMarce.ClientesDB.COLUMN_PAQUETE + " = "+1,null,null,null,null);
+                    else
+                        cursor=database.query(DatabaseContractMarce.ClientesDB.CLIENTES_TABLE_NAME,columns,null,null,null,null,null);
+                }
+                else {
+                    String[] columns={DatabaseContractMarce.ProfesoresDB.COLUMN_UID, DatabaseContractMarce.ProfesoresDB.COLUMN_NOMBRE};
+                    cursor=database.query(DatabaseContractMarce.ProfesoresDB.PROFESORES_TABLE_NAME,columns,null,null,null,null,null);
+                }
 
-        ClienteOProfesorAdapter adapter= new ClienteOProfesorAdapter(cursor,this,esCliente);
-        solicitudesRView.setAdapter(adapter);
+                return cursor;
+            }
+
+            @Override
+            protected void onPostExecute(Cursor cursor) {
+                super.onPostExecute(cursor);
+                ClienteOProfesorAdapter adapter= new ClienteOProfesorAdapter(cursor,ListaClientesOProfesores.this,esCliente);
+                solicitudesRView.setAdapter(adapter);
+            }
+        };
+
+        at.execute(esCliente,esConPaquete);
+
+
 
     }
 

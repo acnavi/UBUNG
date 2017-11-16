@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_vertical">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/caja_blanca_pseudotransparente">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/registrarse_correo_label" />
+        android:text="@string/registrarse_correo_label"
+        android:layout_gravity="top"
+        android:textSize="@dimen/tamano_letra_login"
+        android:layout_margin="@dimen/activity_login_margin"/>
     <EditText
         android:id="@+id/inicio_sec_correo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="@dimen/activity_login_margin"
+        android:layout_marginLeft="@dimen/activity_login_margin"
         />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/morado"
+    />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/registrarse_contrasena_label" />
+        android:text="@string/registrarse_contrasena_label"
+        android:textSize="@dimen/tamano_letra_login"
+        android:layout_margin="@dimen/activity_login_margin"
+        />
     <EditText
         android:id="@+id/inicio_sec_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="@dimen/activity_login_margin"
+        android:layout_marginLeft="@dimen/activity_login_margin"
+
         />
 
 </LinearLayout>
+</FrameLayout>

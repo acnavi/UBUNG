@@ -1,5 +1,6 @@
 package ubung.co.ubung;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,6 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,10 +44,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import java.util.Calendar;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ubung.co.ubung.Marce.ListaClientesOProfesores;
+import ubung.co.ubung.Marce.PreferenciasActivity;
 import ubung.co.ubung.Marce.SolocitudesClientesActivity;
 import ubung.co.ubung.Utilidades.DatabaseManager;
 import ubung.co.ubung.Utilidades.LaClaseQueHaceTodoConLasFechas;
@@ -194,6 +201,22 @@ public class Calendario extends AppCompatActivity
                     Glide.with(Calendario.this)
                             .using(new FirebaseImageLoader())
                             .load(refFotico)
+                            .listener(new RequestListener<StorageReference, GlideDrawable>() {
+                                final CircleImageView circleImageView= (CircleImageView) Calendario.this.findViewById(R.id.nav_header_mientrasCarga);
+                                final CircleImageView circleImageViewCool= (CircleImageView) Calendario.this.findViewById(R.id.nav_header_image_view);
+                                @Override
+                                public boolean onException(Exception e, StorageReference model, Target<GlideDrawable> target, boolean isFirstResource) {
+
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(GlideDrawable resource, StorageReference model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                    circleImageView.setVisibility(View.GONE);
+                                    circleImageViewCool.setVisibility(View.VISIBLE);
+                                    return false;
+                                }
+                            })
                             .dontAnimate()
                             .into(iv);
                 }
@@ -281,6 +304,8 @@ public class Calendario extends AppCompatActivity
             cerrarSecion();
 
         } else if (id == R.id.menu_marce_generar_reporte) {
+            Intent i = new Intent(this, PreferenciasActivity.class);
+            startActivity(i);
 
         }else if (id == R.id.nav_contactar){
 
@@ -298,7 +323,22 @@ public class Calendario extends AppCompatActivity
 
     }
     public void cerrarSecion(){
-        PreLoginActivity.cerrarSecion(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("").setMessage(R.string.menu_cerrar_sec)
+                .setNegativeButton(R.string.boton_cancelar_cerrar_secion, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(R.string.boton_aceptar_cerrar_secion, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        PreLoginActivity.cerrarSecion(Calendario.this);
+                    }
+                }).show();
+
+
     }
 
     @Override

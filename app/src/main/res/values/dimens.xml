@@ -14,6 +14,9 @@
 
     <dimen name="letra_datos">17sp</dimen>
     <dimen name="nombre_datos">20sp</dimen>
+    <dimen name="tamano_nombre_lista">18sp</dimen>
+    <dimen name="tamano_letra_login">20sp</dimen>
     <dimen name="margen_blanca_datos">4dp</dimen>
 
+    <dimen name="activity_login_margin">12dp</dimen>
 </resources>
