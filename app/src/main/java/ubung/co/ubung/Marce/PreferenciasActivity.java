@@ -5,16 +5,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
+import android.support.annotation.StyleRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -25,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import ubung.co.ubung.PerfilActivity;
 import ubung.co.ubung.PreLoginActivity;
 import ubung.co.ubung.R;
 import ubung.co.ubung.Semana;
@@ -37,6 +43,8 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
     private ActivityPreferenciasBinding binding;
 
     private boolean huboCambioyNoEstaGuardado;
+    private int horaMayor;
+    private int horaMenor;
 
     private final static int KEY_TAG_KEY=R.id.preferenciasActivity_key_tag_key;
 
@@ -48,7 +56,8 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         //Lo de siempre y instanciada del binding
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_preferencias);
-
+        horaMayor=0;
+        horaMenor=10000;
         huboCambioyNoEstaGuardado=false;
         //ReferenciaBaseDeDatos
         DatabaseReference dr= FirebaseDatabase.getInstance().getReference();
@@ -72,6 +81,8 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
     private void lanzarActivitySemanaGenerica() {
 
         Intent intent = new Intent(this, SemanaGenericaActivity.class);
+        intent.putExtra(SemanaGenericaActivity.KEY_HORAMENOR,horaMenor);
+        intent.putExtra(SemanaGenericaActivity.KEY_HORAMAYOR,horaMayor);
         startActivity(intent);
     }
 
@@ -133,6 +144,7 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         String key= dataSnapshot.getKey();
         Object val=  dataSnapshot.getValue();
 
+
         if(key.equals(getString(R.string.db_preferencias_cantAlmnos_por_clase))){
             ((TextView)binding.preferenciasEtCantidadPersonas.getChildAt(1)).setText(val.toString());
         }
@@ -152,16 +164,17 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
             ((TextView)binding.preferenciasEtCantidadSemanas.getChildAt(1)).setText(val.toString());
         }
         else if(key.equals(getString(R.string.db_preferencias_hora_fin_entre_sem))){
-            ((TextView)binding.preferenciasEtHoraFinalEntreSemana.getChildAt(1)).setText(val.toString());
+
+            ((TextView)binding.preferenciasEtHoraFinalEntreSemana.getChildAt(1)).setText(ponerHorita(val));
         }
         else if(key.equals(getString(R.string.db_preferencias_hora_fin_sab))){
-            ((TextView)binding.preferenciasEtHoraFinalSabado.getChildAt(1)).setText(val.toString());
+            ((TextView)binding.preferenciasEtHoraFinalSabado.getChildAt(1)).setText(ponerHorita(val));
         }
         else if(key.equals(getString(R.string.db_preferencias_hora_inicio_entre_sem))){
-            ((TextView)binding.preferenciasEtHoraInicialEntreSemana.getChildAt(1)).setText(val.toString());
+            ((TextView)binding.preferenciasEtHoraInicialEntreSemana.getChildAt(1)).setText(ponerHorita(val));
         }
         else if(key.equals(getString(R.string.db_preferencias_hora_inicio_sab))){
-            ((TextView)binding.preferenciasEtHoraInicialSabado.getChildAt(1)).setText(val.toString());
+            ((TextView)binding.preferenciasEtHoraInicialSabado.getChildAt(1)).setText(ponerHorita(val));
         }
     }
 
@@ -180,23 +193,112 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
 
     }
 
+    public String ponerHorita(Object h){
+        long hora= (Long) h;
+        if (hora>horaMayor) horaMayor= (int) hora;
+        if (hora>horaMenor) horaMenor= (int) hora;
+        String AM_PM= "a.m.";
+
+
+        if(hora>=12){
+            if(hora!=12) hora%=12;
+            AM_PM="p.m.";
+        }
+        return ""+hora+":00"+AM_PM;
+
+    }
+
     public class ListenerHoritasEditText implements View.OnClickListener{
+        final int[] AM_PM= new int[1];
 
         @Override
         public void onClick(View v) {
-
             final LinearLayout ll=(LinearLayout) v;
-                final TextView editText = (TextView) (ll).getChildAt(1);
-                TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String enLaMitad=":";
-                        if(minute<10)  enLaMitad+=0;
-                        preferencias.child((String) ll.getTag(KEY_TAG_KEY)).setValue(hourOfDay+enLaMitad+minute);
+//            final int numero[]= new int[1];
+//            NumberPicker.OnValueChangeListener listener = new NumberPicker.OnValueChangeListener() {
+//
+//                @Override
+//                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//                    numero[0]=newVal;
+//
+//                }
+//
+//
+//            };
+//            NumberPicker.OnValueChangeListener listener2 = new NumberPicker.OnValueChangeListener() {
+//
+//                @Override
+//                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//                    AM_PM[0]=newVal;
+//
+//                }
+//
+//
+//            };
+            LinearLayout linearLayout= new LinearLayout(PreferenciasActivity.this);
+            linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            final NumberPicker picker = new NumberPicker(PreferenciasActivity.this);
+            picker.setMinValue(0);
+            picker.setMaxValue(1);
+            picker.setDisplayedValues( new String[] { "a.m.", "p.m"} );
+//            picker.setOnValueChangedListener(listener2);
+            final NumberPicker nm= new NumberPicker(PreferenciasActivity.this);
+            nm.setMaxValue(12);
+            nm.setMinValue(1);
+            nm.setWrapSelectorWheel(false);
+//            nm.setOnValueChangedListener(listener);
+            TextView tv= new TextView(PreferenciasActivity.this);
+            tv.setGravity(Gravity.CENTER);
+            tv.setText(":00");
+            linearLayout.addView(nm);
+            linearLayout.addView(tv);
+            linearLayout.addView(picker);
+
+            //malparido sapo
+            AlertDialog.Builder b= new AlertDialog.Builder(PreferenciasActivity.this);
+            b.setTitle(((TextView)ll.getChildAt(0)).getText().toString()).
+                    setView(linearLayout).setPositiveButton(R.string.boton_guardar_preferencias, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+
+                        int v=nm.getValue() + picker.getValue()*12;
+                        if(v==12) v=0;
+                        else if(v==24) v=12;
+                        preferencias.child((String) ll.getTag(KEY_TAG_KEY)).setValue(v);
                     }
-                };
-                TimePickerDialog dialog= new TimePickerDialog(PreferenciasActivity.this,listener,12,00,true);
-                dialog.show();
+                    catch (Exception e) {
+//                        Toast.makeText(c,"Debes introducir un numero.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            })
+
+                    .setNegativeButton(R.string.boton_descartar_preferencias, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    }).show();
+//            TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        String enLaMitad=":";
+//                        boolean seRedondeo= minute!=0 && minute!=30;
+//                        if(minute >=30){
+//                            minute= 30;
+//                        }
+//                        else{
+//                            minute=0;
+//                        }
+//
+//                        if(minute<10)  enLaMitad+=0;
+//                        preferencias.child((String) ll.getTag(KEY_TAG_KEY)).setValue(hourOfDay+enLaMitad+minute);
+//                        if(seRedondeo) Toast.makeText(PreferenciasActivity.this,"Se redondeo la hora",Toast.LENGTH_LONG).show();
+//                    }
+//                };
+//                TimePickerDialog dialog= new TimePickerDialog(PreferenciasActivity.this,listener,12,00,false);
+
 
 
         }
@@ -220,15 +322,15 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
             b.setView(ed)
 
                     .setPositiveButton(R.string.boton_guardar_preferencias, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                     try {
-                        int s = Integer.parseInt(ed.getText().toString());
-                        preferencias.child(key).setValue(s);
-                     }
-                     catch (Exception e) {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                int s = Integer.parseInt(ed.getText().toString());
+                                preferencias.child(key).setValue(s);
+                            }
+                            catch (Exception e) {
 //                        Toast.makeText(c,"Debes introducir un numero.", Toast.LENGTH_LONG).show();
-                        }
+                            }
                         }
                     })
 
@@ -244,6 +346,22 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
                     .show();
         }
     }
+
+
+//    public class BuilderApropiado extends AlertDialog.Builder{
+//
+//        public BuilderApropiado(@NonNull Context context, View v) {
+//            super(context);
+//
+//        }
+//        public BuilderApropiado(@NonNull Context context) {
+//            super(context);
+//        }
+//
+//        public BuilderApropiado(@NonNull Context context, @StyleRes int themeResId) {
+//            super(context, themeResId);
+//        }
+//    }
 
 
 
