@@ -38,6 +38,7 @@ public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfes
     private Cursor database;
     private Activity context;
     private StorageReference foticos;
+    private boolean necewsitaResultado;
 
 //    private boolean esCliente;
 
@@ -45,7 +46,7 @@ public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfes
     /*
     Debe pasar un cursosr cuya primera fila sean los uids y el segundo el nombre.
      */
-    public ClienteOProfesorAdapter(Cursor db, Activity c, boolean esC){
+    public ClienteOProfesorAdapter(Cursor db, Activity c, boolean necesitaRes){
 
         database=db;
 
@@ -53,7 +54,7 @@ public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfes
 
 
         foticos= FirebaseStorage.getInstance().getReference(context.getString(R.string.nomble_fotos_perfilSR));
-//        esCliente=esC;
+        necewsitaResultado=necesitaRes;
 
     }
     @Override
@@ -148,6 +149,12 @@ public class ClienteOProfesorAdapter extends RecyclerView.Adapter<ClienteOProfes
 
                 if (context instanceof ListaClientesOProfesores){
                     ListaClientesOProfesores l = (ListaClientesOProfesores) context;
+                    if(necewsitaResultado){
+
+                        l.devolVerUsiario(nombre.getText().toString(),uid);
+
+                    }
+                    else
                     l.lanzarPerfil(uid);
                 }
                 else {

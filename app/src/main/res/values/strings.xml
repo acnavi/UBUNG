@@ -103,8 +103,6 @@
     <string name="ecc_reservada" translatable="false">reservada</string>
     <string name="ecc_not_available" translatable="false">not available</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--Estados clase clientes-->
 
@@ -153,9 +151,14 @@
     <string name="boton_descartar_preferencias">Descartar</string>
     <string name="boton_cancelar_cerrar_secion">Cancelar</string>
     <string name="boton_aceptar_cerrar_secion">Aceptar</string>
+    <string name="boton_eliminar">Eliminar</string>
 
     <!--Palabras nada mas-->
     <string name="anos">años</string>
+    <string name="anadir_cliente">Añadir Cliente</string>
+    <string name="anadir_clase">Añadir Clase</string>
+    <string name="anadir_profesor">Añadir Profesor</string>
+
     <!--Toolbar menus-->
 
     <string-array name="hombre_mujer">

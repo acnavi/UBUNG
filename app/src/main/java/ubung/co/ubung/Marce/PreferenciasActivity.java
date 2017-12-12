@@ -45,6 +45,8 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
     private boolean huboCambioyNoEstaGuardado;
     private int horaMayor;
     private int horaMenor;
+    private int cantEstuciantesClases;
+    private int cantClasesHora;
 
     private final static int KEY_TAG_KEY=R.id.preferenciasActivity_key_tag_key;
 
@@ -83,6 +85,8 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         Intent intent = new Intent(this, SemanaGenericaActivity.class);
         intent.putExtra(SemanaGenericaActivity.KEY_HORAMENOR,horaMenor);
         intent.putExtra(SemanaGenericaActivity.KEY_HORAMAYOR,horaMayor);
+        intent.putExtra(SemanaGenericaActivity.KEY_CANTCLASESHORA,Integer.parseInt(((TextView)binding.preferenciasEtCantidadClases.getChildAt(1)).getText().toString()));
+        intent.putExtra(SemanaGenericaActivity.KEY_CANTESTUDIANTESCLASES,Integer.parseInt(((TextView)binding.preferenciasEtCantidadPersonas.getChildAt(1)).getText().toString()));
         startActivity(intent);
     }
 
@@ -159,6 +163,7 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         }
         else if(key.equals(getString(R.string.db_preferencias_cant_clases))){
             ((TextView)binding.preferenciasEtCantidadClases.getChildAt(1)).setText(val.toString());
+
         }
         else if(key.equals(getString(R.string.db_preferencias_cant_semanas))){
             ((TextView)binding.preferenciasEtCantidadSemanas.getChildAt(1)).setText(val.toString());
@@ -196,7 +201,7 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
     public String ponerHorita(Object h){
         long hora= (Long) h;
         if (hora>horaMayor) horaMayor= (int) hora;
-        if (hora>horaMenor) horaMenor= (int) hora;
+        if (hora<horaMenor) horaMenor= (int) hora;
         String AM_PM= "a.m.";
 
 
@@ -251,6 +256,7 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
             TextView tv= new TextView(PreferenciasActivity.this);
             tv.setGravity(Gravity.CENTER);
             tv.setText(":00");
+
             linearLayout.addView(nm);
             linearLayout.addView(tv);
             linearLayout.addView(picker);

@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import ubung.co.ubung.PerfilActivity;
 import ubung.co.ubung.R;
@@ -23,8 +24,11 @@ public class ListaClientesOProfesores extends AppCompatActivity {
 
     public final static String KEY_ES_CLIENTE="escliente";
     public final static String KEY_ES_CON_PAQUETE="esconPaq";
+    public final static String KEY_NECESITARESULTADO="escoRES";
     private boolean esCliente;
     private boolean esConPaquete;
+    private boolean necesitaResultado;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,7 @@ public class ListaClientesOProfesores extends AppCompatActivity {
         Intent i = getIntent();
         esCliente =i.getBooleanExtra(KEY_ES_CLIENTE,true);
         esConPaquete=i.getBooleanExtra(KEY_ES_CON_PAQUETE,false);
+        necesitaResultado=i.getBooleanExtra(KEY_NECESITARESULTADO,false);
 
         AsyncTask<Boolean, Void, Cursor> at=new AsyncTask<Boolean, Void, Cursor>() {
             boolean esCli;
@@ -80,7 +85,7 @@ public class ListaClientesOProfesores extends AppCompatActivity {
             @Override
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
-                ClienteOProfesorAdapter adapter= new ClienteOProfesorAdapter(cursor,ListaClientesOProfesores.this,esCliente);
+                ClienteOProfesorAdapter adapter= new ClienteOProfesorAdapter(cursor,ListaClientesOProfesores.this,necesitaResultado);
                 solicitudesRView.setAdapter(adapter);
             }
         };
@@ -104,4 +109,11 @@ public class ListaClientesOProfesores extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void devolVerUsiario(String nombre, String uid) {
+        Intent data = new Intent();
+        data.putExtra(SemanaGenericaActivity.NOMBRE_COM, nombre);
+        data.putExtra(SemanaGenericaActivity.UID_ORG,uid);
+        setResult(RESULT_OK, data);
+        finish();
+    }
 }
