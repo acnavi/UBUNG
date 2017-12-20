@@ -1,6 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_horizontal_marginx2">32dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
@@ -16,7 +17,11 @@
     <dimen name="nombre_datos">20sp</dimen>
     <dimen name="tamano_nombre_lista">18sp</dimen>
     <dimen name="tamano_letra_login">20sp</dimen>
+    <dimen name="tamano_letra_pref_medio">19sp</dimen>
+    <dimen name="tamano_letra_pref_grande">25sp</dimen>
+    <dimen name="tamano_letra_pref_peq">17sp</dimen>
     <dimen name="margen_blanca_datos">4dp</dimen>
+    <dimen name="margen_drawable_text">5dp</dimen>
 
     <dimen name="activity_login_margin">12dp</dimen>
 </resources>

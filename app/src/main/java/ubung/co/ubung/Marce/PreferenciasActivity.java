@@ -42,11 +42,8 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
 
     private ActivityPreferenciasBinding binding;
 
-    private boolean huboCambioyNoEstaGuardado;
     private int horaMayor;
     private int horaMenor;
-    private int cantEstuciantesClases;
-    private int cantClasesHora;
 
     private final static int KEY_TAG_KEY=R.id.preferenciasActivity_key_tag_key;
 
@@ -60,7 +57,7 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         binding= DataBindingUtil.setContentView(this,R.layout.activity_preferencias);
         horaMayor=0;
         horaMenor=10000;
-        huboCambioyNoEstaGuardado=false;
+
         //ReferenciaBaseDeDatos
         DatabaseReference dr= FirebaseDatabase.getInstance().getReference();
         preferencias = dr.child(getString(R.string.nombre_preferenciasFDB));
@@ -219,47 +216,29 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         @Override
         public void onClick(View v) {
             final LinearLayout ll=(LinearLayout) v;
-//            final int numero[]= new int[1];
-//            NumberPicker.OnValueChangeListener listener = new NumberPicker.OnValueChangeListener() {
-//
-//                @Override
-//                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                    numero[0]=newVal;
-//
-//                }
-//
-//
-//            };
-//            NumberPicker.OnValueChangeListener listener2 = new NumberPicker.OnValueChangeListener() {
-//
-//                @Override
-//                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                    AM_PM[0]=newVal;
-//
-//                }
-//
-//
-//            };
+
             LinearLayout linearLayout= new LinearLayout(PreferenciasActivity.this);
-            linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             final NumberPicker picker = new NumberPicker(PreferenciasActivity.this);
             picker.setMinValue(0);
             picker.setMaxValue(1);
             picker.setDisplayedValues( new String[] { "a.m.", "p.m"} );
-//            picker.setOnValueChangedListener(listener2);
+
             final NumberPicker nm= new NumberPicker(PreferenciasActivity.this);
             nm.setMaxValue(12);
             nm.setMinValue(1);
-            nm.setWrapSelectorWheel(false);
-//            nm.setOnValueChangedListener(listener);
+            nm.setWrapSelectorWheel(true);
+
+
             TextView tv= new TextView(PreferenciasActivity.this);
-            tv.setGravity(Gravity.CENTER);
+            tv.setGravity(Gravity.CENTER_VERTICAL);
             tv.setText(":00");
 
             linearLayout.addView(nm);
             linearLayout.addView(tv);
             linearLayout.addView(picker);
+            linearLayout.setGravity(Gravity.CENTER);
 
             //malparido sapo
             AlertDialog.Builder b= new AlertDialog.Builder(PreferenciasActivity.this);
@@ -286,6 +265,7 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
                             dialog.cancel();
                         }
                     }).show();
+
 //            TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
 //                    @Override
 //                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -318,20 +298,25 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         @Override
         public void onClick(View v) {
             LinearLayout ll=(LinearLayout) v;
-            final EditText ed = new EditText(c);
-            ed.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            final NumberPicker nm= new NumberPicker(c);
+            nm.setMaxValue(10);
+            nm.setMinValue(1);
+            nm.setWrapSelectorWheel(true);
+
             String titulo = ((TextView)ll.getChildAt(0)).getText().toString();
             String currentVal= ((TextView)ll.getChildAt(1)).getText().toString();
-            ed.setText(currentVal);
+
+            nm.setValue(Integer.parseInt(currentVal));
             final String key = (String) v.getTag(KEY_TAG_KEY);
             AlertDialog.Builder b= new AlertDialog.Builder(c);
-            b.setView(ed)
+            b.setView(nm)
 
                     .setPositiveButton(R.string.boton_guardar_preferencias, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             try {
-                                int s = Integer.parseInt(ed.getText().toString());
+                                int s = nm.getValue();
                                 preferencias.child(key).setValue(s);
                             }
                             catch (Exception e) {

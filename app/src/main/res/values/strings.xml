@@ -167,15 +167,22 @@
     </string-array>
 
     <!--PreferenciasActivity-->
-    <string name="PrefAct_texto_cantidadEstudiantes">Cantidad estudiantes por clase</string>
-    <string name="PrefAct_texto_cantidadFisioterapia">Cantidad estudiantes por fisioterapia</string>
-    <string name="PrefAct_texto_cantidadClases">Cantidad clases</string>
-    <string name="PrefAct_texto_cantidadSemanas">Cantidad semanas</string>
+    <string name="PrefAct_texto_cantidadEstudiantes">Pilates</string>
+    <string name="PrefAct_texto_cantidadFisioterapia">Fisioterapia</string>
+    <string name="PrefAct_texto_cantidadClases">Cantidad clases por hora</string>
+    <string name="PrefAct_texto_cantidadSemanas">Semanas para reservar</string>
     <string name="PrefAct_texto_cantidadHorasReserva">Horas para reservar</string>
     <string name="PrefAct_texto_cantidadHorasCancelar">Horas para cancelar</string>
-    <string name="PrefAct_texto_horasInicioEntreSem">Hora inicial Lunes a Viernes</string>
-    <string name="PrefAct_texto_horasFinalEntreSem">Hora final Lunes a Viernes</string>
-    <string name="PrefAct_texto_horasInicioSab">Hora inicial Sabado</string>
-    <string name="PrefAct_texto_horasFinalSab">Hora final Sabado</string>
+    <string name="PrefAct_texto_horasInicioEntreSem">Hora inicial </string>
+    <string name="PrefAct_texto_horasFinalEntreSem">Hora final </string>
+    <string name="PrefAct_texto_horasInicioSab">Hora inicial </string>
+    <string name="PrefAct_texto_horasFinalSab">Hora final </string>
+    <string name="PrefAct_texto_semanaModelo">Semana Modelo</string>
+    <string name="PrefAct_titulo_semanaModelo">Semana Modelo</string>
+    <string name="PrefAct_titulo_numeroDeEstudiantes">Número de Estudiantes</string>
+    <string name="PrefAct_titulo_horarioLunesAViernes">Horario Lunes a Viernes</string>
+    <string name="PrefAct_titulo_horarioSabado">Horario Sabado</string>
+    <string name="PrefAct_titulo_tiempoLimite">Tiempo Límite</string>
+
 
 </resources>

@@ -151,6 +151,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
             v.setBackgroundResource(R.drawable.caja_casilla_calendario);
             v.setLayoutParams(new ViewGroup.LayoutParams(tamanoCuadrito,tamanoCuadrito));
             tv.setText(diasSemana[i]);
+            tv.setPadding(5,5,0,0);
             v.addView(tv);
             amarrarAEsto.addView(v);
         }
@@ -234,7 +235,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
         public void onBindViewHolder(HolderDeEsto holder, int position) {
             int dIa= position%(columnas);
             int fila= position/(columnas);
-            holder.temp.setText(""+position);
+
             int hora= menorHoraInit+fila;
 
                 holder.hora=hora;
@@ -263,7 +264,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
             int hora;
             int dia;
             TextView tv;
-            TextView temp;
+
             ObjetoHoras data;
             
 
@@ -271,12 +272,9 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
                 super(itemView);
                 tv=new TextView(itemView.getContext());
                 ((FrameLayout)itemView).addView(tv);
-                temp=new TextView(itemView.getContext());
-                temp.setGravity(Gravity.BOTTOM);
 
-                ((FrameLayout)itemView).addView(temp);
                 itemView.setOnClickListener(this);
-
+                this.itemView.setBackgroundResource(R.drawable.caja_casilla_calendario_no_disp);
 
 
             }
@@ -289,6 +287,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
                 else if(hora>12) s=""+hora%12+":00 p.m.";
                 else  s=""+hora+":00 a.m.";
                 tv.setText(s);
+                tv.setPadding(5,5,0,0);
 
             }
 
@@ -296,7 +295,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
 
                 data=d;
                 tv.setVisibility(View.GONE);
-                temp.setVisibility(View.GONE);
+
                 if(data.disponible) itemView.setBackgroundResource(R.drawable.caja_casilla_calendario);
                 else itemView.setBackgroundResource(R.drawable.caja_casilla_calendario_no_disp);
             }
@@ -304,6 +303,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
             @Override
             public void onClick(View v) {
 
+                if(dia==0) return;
                 onDisplay = new DialogoParaEto();
 
                 onDisplay.construir(hora,dia);
@@ -344,50 +344,6 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
                     onDisplay.anadirCliente(nombre);
                 }
                 onDisplay.anadirBotonEliminar();
-
-//                    final String[] nombreeid = data.clientes.get(CLIENTE_KEY +i).split(",");
-//                    if(nombreeid==null) break;
-//                    String nombre= nombreeid[1];
-//                    posicionClienteParaRespuesta++;
-//                    TextView textV= new TextView(SemanaGenericaActivity.this);
-//                    textV.setText(nombre);
-//                    final int j= i;
-//                    final DialogInterface.OnClickListener on= new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            if(which==DialogInterface.BUTTON_POSITIVE){
-//                                eliminarClienteDeDiaYHora(dia,hora,j);
-//                            }
-//                            dialog.cancel();
-//                        }
-//                    };
-//                    textV.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            AlertDialog.Builder bu= new AlertDialog.Builder(SemanaGenericaActivity.this);
-//                            bu.setTitle(nombreeid[0]).setPositiveButton(getString(R.string.boton_eliminar),on)
-//                                    .setNegativeButton(getString(R.string.boton_cancelar_cerrar_secion),on);
-//                        }});
-//                    linearLayout.addView(tv);
-//                }
-//                onDisplay = builder.setView(linearLayout).setPositiveButton(R.string.boton_guardar_preferencias, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//
-//                        if (!huboCambios)dialog.cancel();
-//                        else {
-//                            //TODO
-//                        }
-//                    }
-//                })
-//
-//                        .setNegativeButton(R.string.boton_descartar_preferencias, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.cancel();
-//                            }
-//                        }).show();
 
 
             }

@@ -7,6 +7,9 @@
     <color name="blanco">#FFFFFF</color>
     <color name="separadores">#e0e0df</color>
     <color name="fondo_gris">#eeeeee</color>
+    <color name="gris_letra">#e0e0df</color>
+    <color name="negro">#000000</color>
+
 
     <!--Colores casillas clases-->
     <!--TODO: cambiar los colores de abajo-->

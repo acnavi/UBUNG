@@ -11,169 +11,286 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Semana Generica      >"
-            android:id="@+id/preferencias_tv_semana_generica"/>
-        <LinearLayout
+            android:layout_height="wrap_content"
+            android:text="@string/PrefAct_texto_semanaModelo"
+            android:textSize="@dimen/tamano_letra_pref_grande"
+            android:id="@+id/preferencias_tv_semana_generica"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textColor="@color/negro"
+            android:drawableRight="@drawable/ic_flechita"
+
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separadores"
+            ></View>
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:id="@+id/preferencias_et_cantidad_personas">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_cantidadEstudiantes"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
+            android:text="@string/PrefAct_titulo_numeroDeEstudiantes"
+            android:textColor="@color/morado"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/tamano_letra_pref_medio"
+            android:drawableLeft="@drawable/ic_clientes_android"
+            android:drawablePadding="@dimen/margen_drawable_text"
+            android:drawableTint="@color/morado"/>
+
         <LinearLayout
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:id="@+id/preferencias_et_cantidad_clases"
+            android:id="@+id/preferencias_et_cantidad_personas"
+
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_cantidadClases"/>
-
+                android:text="@string/PrefAct_texto_cantidadEstudiantes"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/tamano_letra_pref_peq"
                 />
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/preferencias_et_cantidad_personas_fisio"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PrefAct_texto_cantidadFisioterapia"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/tamano_letra_pref_peq"
+                />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separadores"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/PrefAct_titulo_horarioLunesAViernes"
+            android:textColor="@color/morado"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/tamano_letra_pref_medio"
+            android:drawableLeft="@drawable/ic_relogito"
+            android:drawablePadding="@dimen/margen_drawable_text"
+            android:drawableTint="@color/morado"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            android:orientation="vertical"
             android:layout_weight="1"
             android:id="@+id/preferencias_et_hora_inicial_entre_semana">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_horasInicioEntreSem"/>
+                android:text="@string/PrefAct_texto_horasInicioEntreSem"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
+
         </LinearLayout>
         <LinearLayout
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_weight="1"
             android:id="@+id/preferencias_et_hora_final_entre_semana">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_horasFinalEntreSem"/>
+                android:text="@string/PrefAct_texto_horasFinalEntreSem"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separadores"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/PrefAct_titulo_horarioSabado"
+            android:textColor="@color/morado"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/tamano_letra_pref_medio"
+            android:drawableLeft="@drawable/ic_relogito"
+            android:drawablePadding="@dimen/margen_drawable_text"
+            android:drawableTint="@color/morado"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            android:orientation="vertical"
             android:layout_weight="1"
             android:id="@+id/preferencias_et_hora_inicial_sabado">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_horasInicioSab"/>
+                android:text="@string/PrefAct_texto_horasInicioSab"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            android:orientation="vertical"
             android:layout_weight="1"
             android:id="@+id/preferencias_et_hora_final_sabado"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_horasFinalSab"/>
+                android:text="@string/PrefAct_texto_horasFinalSab"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
+                android:textSize="@dimen/tamano_letra_pref_medio"
                 />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separadores"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/PrefAct_titulo_tiempoLimite"
+            android:textColor="@color/morado"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/tamano_letra_pref_medio"
+            android:drawableLeft="@drawable/ic_relogito_con_flechita"
+            android:drawablePadding="@dimen/margen_drawable_text"
+            android:drawableTint="@color/morado"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            android:orientation="vertical"
             android:layout_weight="1"
             android:id="@+id/preferencias_et_cantidad_horas_reservar">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_cantidadHorasReserva"/>
+                android:text="@string/PrefAct_texto_cantidadHorasReserva"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="2"
-                />
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            android:orientation="vertical"
             android:layout_weight="1"
             android:id="@+id/preferencias_et_cantidad_horas_cancelar">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_cantidadHorasCancelar"/>
+                android:text="@string/PrefAct_texto_cantidadHorasCancelar"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:id="@+id/preferencias_et_cantidad_semanas">
+            android:id="@+id/preferencias_et_cantidad_semanas"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_cantidadSemanas"/>
+                android:text="@string/PrefAct_texto_cantidadSemanas"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:id="@+id/preferencias_et_cantidad_personas_fisio">
+            android:id="@+id/preferencias_et_cantidad_clases"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PrefAct_texto_cantidadFisioterapia"/>
+                android:text="@string/PrefAct_texto_cantidadClases"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
+                android:textSize="@dimen/tamano_letra_pref_medio"
                 />
         </LinearLayout>
+
+
     </LinearLayout>
 </ScrollView>
 </layout>
