@@ -85,6 +85,10 @@
     <string name="nombre_preferenciasFDB" translatable="false">preferencias</string>
     <string name="db_preferencias_cantAlmnos_por_clase" translatable="false">alum_por_clas</string>
     <string name="db_preferencias_cantAlmnos_por_clase_fisio" translatable="false">alum_por_clas_fisio</string>
+
+    <string name="db_preferencias_cantAlmnos_por_clase_listaDeEs" translatable="false">alum_por_clas_listaDeEs</string>
+    <string name="db_preferencias_cantAlmnos_por_clase_fisio_listaDeEs" translatable="false">alum_por_clas_fisio_listaDeEs</string>
+
     <string name="db_preferencias_cant_clases" translatable="false">cantidad_clases</string>
     <string name="db_preferencias_cant_semanas" translatable="false">cantidad_semanas</string>
     <string name="db_preferencias_cant_horas_reserv" translatable="false">cantidad_horas_reserv</string>
@@ -180,6 +184,7 @@
     <string name="PrefAct_texto_semanaModelo">Semana Modelo</string>
     <string name="PrefAct_titulo_semanaModelo">Semana Modelo</string>
     <string name="PrefAct_titulo_numeroDeEstudiantes">Número de Estudiantes</string>
+    <string name="PrefAct_titulo_numeroDeEstudiantes_listaDeEspera">Número de Estudiantes Lista De Espera</string>
     <string name="PrefAct_titulo_horarioLunesAViernes">Horario Lunes a Viernes</string>
     <string name="PrefAct_titulo_horarioSabado">Horario Sabado</string>
     <string name="PrefAct_titulo_tiempoLimite">Tiempo Límite</string>

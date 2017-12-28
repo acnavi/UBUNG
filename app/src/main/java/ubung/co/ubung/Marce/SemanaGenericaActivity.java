@@ -27,9 +27,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import ubung.co.ubung.Objetos.ClaseGenerica;
 import ubung.co.ubung.R;
 
 public class SemanaGenericaActivity extends AppCompatActivity implements EventListener<QuerySnapshot>{
@@ -41,14 +43,14 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
     public final static String KEY_CANTESTUDIANTESCLASES = "keycantestclas";
     public final static String KEY_CANTCLASESHORA = "keycantclas";
     private static final String TAG = "SemanaGenericaActivity";
-    public static final String CLIENTE_KEY = "cliente";
-    public static final String PROFESOR_KEY = "profesor";
+    public static final String CLIENTE_KEY = "clientes";
+    public static final String PROFESOR_KEY = "profesores";
     public static final String NOMBRE_COM = "nombre.com";
     public static final String UID_ORG = "uid.org";
     private static final int REQUEST_CODE = 245;
     private int dias;
     private final static String collectionHoritasNamePath="horas";
-    private HashMap<Integer,ObjetoHoras>[] horas;
+    private HashMap<Integer,ClaseGenerica>[] horas;
     private CollectionReference collectionDiasReference;
     private FirebaseFirestore paraTransacciones;
     private int menorHoraInit;
@@ -88,7 +90,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
         horas= new HashMap[dias];
         paraCerar= new ListenerRegistration[dias];
         for (int i=0;i<horas.length; i++){
-            horas[i]= new HashMap<Integer, ObjetoHoras>(12);
+            horas[i]= new HashMap<Integer, ClaseGenerica>(12);
         }
 
         collectionDiasReference= paraTransacciones.collection(collectionDiasPath);
@@ -102,42 +104,6 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
         rv.setAdapter(adaptador);
         rv.setLayoutManager(new GridLayoutManager(this,dias+1));
         hacerLaPrimerFila((LinearLayout) findViewById(R.id.semana_generica_header));
-//            DocumentReference dr= collectionDiasReference.document(""+i);
-//            paraTransacciones.runTransaction(new Transaction.Function<>)
-//        }
-//        collectionDiasReference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot documentSnapshots) {
-//                int columnas= documentSnapshots.size();
-//                ArrayList<Boolean>[] temp= new ArrayList[columnas+1];
-//
-//
-//
-//                for(DocumentSnapshot ds: documentSnapshots){
-//                    int columna= Integer.parseInt(ds.getId());
-//                    ArrayList<Boolean> arrayDeColumna = new ArrayList<Boolean>();
-//                    ds.getDocumentReference()
-//
-//
-//                }
-//                llenarCuadrito();
-//            }
-//        });
-//        ScrollView sv= (ScrollView) findViewById(R.id.semana_generica_scroll_view);
-//        GridView gv = new GridView(this);
-//
-//        int filas=10;
-//        gv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        gv.setColumnWidth(tamano);
-//        gv.setNumColumns(6);
-//        hacerLaPrimerFila(tamano,gv);
-//        for (int i =0; i<filas; i++){
-//
-//        }
-//        View v = new View(this);
-//        v.setBackgroundResource(R.drawable.caja_casilla_calendario);
-//        v.setLayoutParams(new ViewGroup.LayoutParams(tamano,tamano));
-//        sv.addView(v);
     }
 
 
@@ -170,31 +136,33 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
 
         for (DocumentChange dc : documentSnapshots.getDocumentChanges()) {
             DocumentSnapshot doc= dc.getDocument();
-            int hora =  doc.getLong("hora").intValue();
-            HashMap<String, String> profes= new HashMap<>();
-            HashMap<String, String> client= new HashMap<>();
+            ClaseGenerica claseGenerica = doc.toObject(ClaseGenerica.class);
+            int hora =  claseGenerica.getHora();
             int dia=Integer.parseInt(doc.getReference().getParent().getParent().getId());
-            for (Map.Entry<String, Object> entry : doc.getData().entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue().toString();
-                if(key.contains(CLIENTE_KEY)){
-                    client.put(key,value);
-                }
-                else if(key.contains(PROFESOR_KEY)){
-                    profes.put(key,value);
+//            HashMap<String, String> profes= new HashMap<>();
+//            HashMap<String, String> client= new HashMap<>();
 
-                }
-
-            }
-            boolean disponible;
-            try {
-                disponible = doc.getBoolean(KET_DB_DISPONIBLE);
-
-
-            }
-            catch (RuntimeException re){
-                disponible=false;
-            }
+//            for (Map.Entry<String, Object> entry : doc.getData().entrySet()) {
+//                String key = entry.getKey();
+//                String value = entry.getValue().toString();
+//                if(key.contains(CLIENTE_KEY)){
+//                    client.put(key,value);
+//                }
+//                else if(key.contains(PROFESOR_KEY)){
+//                    profes.put(key,value);
+//
+//                }
+//
+//            }
+//            boolean disponible;
+//            try {
+//                disponible = doc.getBoolean(KET_DB_DISPONIBLE);
+//
+//
+//            }
+//            catch (RuntimeException re){
+//                disponible=false;
+//            }
             int posicionANotificar=(hora-menorHoraInit)*(dias+1)+dia;
             if (dc.getType().equals(DocumentChange.Type.REMOVED)) {
                 horas[dia-1].remove(hora);
@@ -202,7 +170,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
                 adaptador.notifyItemRemoved(posicionANotificar);
             }
             else{
-                horas[dia-1].put(hora,new ObjetoHoras(disponible,profes,client));
+                horas[dia-1].put(hora,claseGenerica);
                 if(hora>mayorHoraFin){mayorHoraFin=hora;
                 adaptador.notifyDataSetChanged();}
                 else if(hora<menorHoraInit){menorHoraInit=hora;
@@ -244,7 +212,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
                 holder.anadirTV();
                 return;
         }
-            ObjetoHoras b=horas[dIa-1].get(hora);
+            ClaseGenerica b=horas[dIa-1].get(hora);
 
             if(b!=null)holder.hacerDisponibleEsteticamente(b);
 
@@ -265,7 +233,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
             int dia;
             TextView tv;
 
-            ObjetoHoras data;
+            ClaseGenerica data;
             
 
             public HolderDeEsto(View itemView) {
@@ -291,12 +259,12 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
 
             }
 
-            public void hacerDisponibleEsteticamente(ObjetoHoras d){
+            public void hacerDisponibleEsteticamente(ClaseGenerica d){
 
                 data=d;
                 tv.setVisibility(View.GONE);
 
-                if(data.disponible) itemView.setBackgroundResource(R.drawable.caja_casilla_calendario);
+                if(data.isDisponible()) itemView.setBackgroundResource(R.drawable.caja_casilla_calendario);
                 else itemView.setBackgroundResource(R.drawable.caja_casilla_calendario_no_disp);
             }
 
@@ -318,8 +286,8 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
                 int profesSize=0;
                 int clientesSize=0;
                 if(data!=null) {
-                    clientesSize=data.clientes.size();
-                    profesSize = data.profesores.size();
+                    if(data.getClientes()!=null)clientesSize=data.getClientes().size();
+                    if(data.getProfesores()!=null)profesSize = data.getProfesores().size();
                 }
                 if(profesSize<cantClasesHora){
                     onDisplay.anadirBotonAnadirProfesor();
@@ -327,7 +295,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
 //
 //
                 for (int i = 0; i < profesSize; i++) {
-                    String nombreeid = data.profesores.get(PROFESOR_KEY +i);
+                    String nombreeid = data.getProfesores().get(i);
                     if(nombreeid==null) break;
 
                     String nombre= nombreeid.split(",")[1];
@@ -338,9 +306,9 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
                 }
 //
                 for (int i = 0; i < clientesSize; i++) {
-                    final String[] nombreeid = data.clientes.get(CLIENTE_KEY +i).split(",");
+                    final String[] nombreeid = data.getClientes().get(i).split(",");
                     if(nombreeid==null) break;
-                    String nombre= nombreeid[1];
+                    String nombre= nombreeid[0];
                     onDisplay.anadirCliente(nombre);
                 }
                 onDisplay.anadirBotonEliminar();
@@ -369,12 +337,12 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
     }
     private void eliminarHora(int dia, int hora, int cantidadDeClientes, int canTidadDeProfes) {
         HashMap<String,Object> map = new HashMap();
-        for(int j=1; j<=cantidadDeClientes; j++){
-            map.put(CLIENTE_KEY+j, FieldValue.delete());
-        }
-        for(int j=1; j<=canTidadDeProfes; j++){
-            map.put(PROFESOR_KEY+j, FieldValue.delete());
-        }
+
+            map.put(CLIENTE_KEY, FieldValue.delete());
+
+
+            map.put(PROFESOR_KEY, FieldValue.delete());
+
         map.put(KET_DB_DISPONIBLE,false);
         collectionDiasReference.document(""+dia).collection(collectionHoritasNamePath)
                 .document(""+hora).update(map);
@@ -435,11 +403,16 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
             String uid = data.getStringExtra(UID_ORG);
             HashMap<String,Object> map = new HashMap();
             String k;
-            if(esClienteParaRespuesta){ k=CLIENTE_KEY+(onDisplay.cantidadClientes+1);
-            onDisplay.anadirCliente(nombre);}
-            else {k=PROFESOR_KEY+(onDisplay.cantidadProfes+1);
-            onDisplay.anadirProfesor(nombre);}
-            map.put(k, nombre+","+uid);
+            ArrayList<String> toUpdate;
+            if(esClienteParaRespuesta){ k=CLIENTE_KEY;
+            onDisplay.anadirCliente(nombre);
+                toUpdate=horas[diaParaRespuesta-1].get(horaParaRespuesta).getClientes();}
+            else {k=PROFESOR_KEY;
+            onDisplay.anadirProfesor(nombre);
+            toUpdate=horas[diaParaRespuesta-1].get(horaParaRespuesta).getProfesores();}
+            if(toUpdate==null) toUpdate=new ArrayList<>();
+            toUpdate.add(nombre+","+uid);
+            map.put(k, toUpdate);
 
             map.put(KET_DB_DISPONIBLE, true);
             collectionDiasReference.document(""+diaParaRespuesta).collection(collectionHoritasNamePath)

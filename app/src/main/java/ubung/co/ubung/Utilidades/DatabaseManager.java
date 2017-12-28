@@ -116,6 +116,7 @@ public class DatabaseManager {
     //   //   //          // //    //       //  //    // //   //
     //   //  ////////     //      // //////// //      // //   //
     //Pensar esta mierda bien, no entiendo al gran malparido ivank del pasado
+    //Yo tampoco :S soy ivank del mas futuro que la anterior frase.
     public  class EscuchadoryLlenadorClasesClientes implements ChildEventListener{
 
         @Override

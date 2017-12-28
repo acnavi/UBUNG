@@ -82,7 +82,64 @@
                 android:textSize="@dimen/tamano_letra_pref_peq"
                 />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separadores"
+            ></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/PrefAct_titulo_numeroDeEstudiantes_listaDeEspera"
+            android:textColor="@color/morado"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/tamano_letra_pref_medio"
+            android:drawableLeft="@drawable/ic_clientes_android"
+            android:drawablePadding="@dimen/margen_drawable_text"
+            android:drawableTint="@color/morado"/>
 
+        <LinearLayout
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/preferencias_et_cantidad_personas_listaDeEspera"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PrefAct_texto_cantidadEstudiantes"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/tamano_letra_pref_peq"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/preferencias_et_cantidad_personas_listaDeEspera_fisio"
+            android:layout_marginLeft="@dimen/activity_horizontal_marginx2"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PrefAct_texto_cantidadFisioterapia"
+                android:textColor="@color/negro"
+                android:textSize="@dimen/tamano_letra_pref_medio"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/tamano_letra_pref_peq"
+                />
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"

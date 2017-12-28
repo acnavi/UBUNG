@@ -100,6 +100,10 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         binding.preferenciasEtCantidadPersonas.setOnClickListener(lct);
 
 
+        binding.preferenciasEtCantidadPersonasListaDeEspera.setTag(KEY_TAG_KEY,getString(R.string.db_preferencias_cantAlmnos_por_clase_listaDeEs));
+        binding.preferenciasEtCantidadPersonasListaDeEspera.setOnClickListener(lct);
+
+
 
         binding.preferenciasEtCantidadHorasCancelar.setTag(KEY_TAG_KEY,getString(R.string.db_preferencias_cant_horas_cancelar));
         binding.preferenciasEtCantidadHorasCancelar.setOnClickListener(lct);
@@ -111,6 +115,9 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
 
         binding.preferenciasEtCantidadPersonasFisio.setTag(KEY_TAG_KEY,getString(R.string.db_preferencias_cantAlmnos_por_clase_fisio));
         binding.preferenciasEtCantidadPersonasFisio.setOnClickListener(lct);
+
+        binding.preferenciasEtCantidadPersonasListaDeEsperaFisio.setTag(KEY_TAG_KEY,getString(R.string.db_preferencias_cantAlmnos_por_clase_fisio_listaDeEs));
+        binding.preferenciasEtCantidadPersonasListaDeEsperaFisio.setOnClickListener(lct);
 
         binding.preferenciasEtCantidadSemanas.setTag(KEY_TAG_KEY,getString(R.string.db_preferencias_cant_semanas));
         binding.preferenciasEtCantidadSemanas.setOnClickListener(lct);
@@ -151,6 +158,12 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
         }
         else if(key.equals(getString(R.string.db_preferencias_cantAlmnos_por_clase_fisio))){
             ((TextView)binding.preferenciasEtCantidadPersonasFisio.getChildAt(1)).setText(val.toString());
+        }
+        else if(key.equals(getString(R.string.db_preferencias_cantAlmnos_por_clase_listaDeEs))){
+            ((TextView)binding.preferenciasEtCantidadPersonasListaDeEspera.getChildAt(1)).setText(val.toString());
+        }
+        else if(key.equals(getString(R.string.db_preferencias_cantAlmnos_por_clase_fisio_listaDeEs))){
+            ((TextView)binding.preferenciasEtCantidadPersonasListaDeEsperaFisio.getChildAt(1)).setText(val.toString());
         }
         else if(key.equals(getString(R.string.db_preferencias_cant_horas_reserv))){
             ((TextView)binding.preferenciasEtCantidadHorasReservar.getChildAt(1)).setText(val.toString());
@@ -306,8 +319,11 @@ public class PreferenciasActivity extends AppCompatActivity implements ChildEven
 
             String titulo = ((TextView)ll.getChildAt(0)).getText().toString();
             String currentVal= ((TextView)ll.getChildAt(1)).getText().toString();
-
-            nm.setValue(Integer.parseInt(currentVal));
+            try{
+            nm.setValue(Integer.parseInt(currentVal));}
+            catch (Exception e){
+                nm.setValue(1);
+            }
             final String key = (String) v.getTag(KEY_TAG_KEY);
             AlertDialog.Builder b= new AlertDialog.Builder(c);
             b.setView(nm)
