@@ -119,10 +119,10 @@ public static class FragmentoHora extends Fragment{
                     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            String mesi= LaClaseQueHaceTodoConLasFechas.getMes(month);
+                            String mesi= LaClaseQueHaceTodoConLasFechas.getMes(month+1);
                             mesyanoTV.setText(mesi+" "+year);
                             diaTV.setText(""+dayOfMonth);
-                            String diaSemanaS= LaClaseQueHaceTodoConLasFechas.getDiaDeLaSemana(year,month,dayOfMonth,getContext());
+                            String diaSemanaS= LaClaseQueHaceTodoConLasFechas.getDiaDeLaSemana(year,month+1,dayOfMonth,getContext());
                             diaSemanaTV.setText(diaSemanaS);
                         }
                     };

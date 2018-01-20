@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -147,10 +149,14 @@ public class Calendario extends AppCompatActivity
         DatabaseManager databaseManager= new DatabaseManager(this,tipo,userUid);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        semanaAdapter= new SemanaFragmentAdapter(getSupportFragmentManager(),4);
-        semanas= (ViewPager) findViewById(R.id.pager_semanas);
-        semanas.setAdapter(semanaAdapter);
-        semanas.setCurrentItem(0);
+        Display d= getWindowManager().getDefaultDisplay();
+        Point p= new Point();
+        d.getSize(p);
+        int tamano=p.x;
+//        semanaAdapter= new SemanaFragmentAdapter(this,getSupportFragmentManager(),tamano,tipo);
+//        semanas= (ViewPager) findViewById(R.id.pager_semanas);
+//        semanas.setAdapter(semanaAdapter);
+//        semanas.setCurrentItem(0);
 
     }
 

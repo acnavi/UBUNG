@@ -11,11 +11,17 @@ public class Clase extends ClaseGenerica {
     private ArrayList<String> listaDeEspera;
     private ArrayList<String> listaDeEsperaFisioterapia;
     private boolean llenoClientes;
+    private boolean llenoProfesores;
     private boolean llenoPorFisioterapia;
     private boolean llenaListaDeEspera;
+    private boolean llenaListaDeEsperaFisio;
 
 
     public Clase(){}
+
+    public boolean isLlenoProfesores() {
+        return llenoProfesores;
+    }
 
     public boolean isLlenaListaDeEspera() {
         return llenaListaDeEspera;
@@ -29,8 +35,21 @@ public class Clase extends ClaseGenerica {
         return llenoPorFisioterapia;
     }
 
+    public boolean isLlenaListaDeEsperaFisio() {
+        return llenaListaDeEsperaFisio;
+    }
+
+    public void setLlenaListaDeEsperaFisio(boolean llenaListaDeEsperaFisio) {
+        this.llenaListaDeEsperaFisio = llenaListaDeEsperaFisio;
+    }
+
     public void setLlenoPorFisioterapia(boolean llenoPorFisioterapia) {
         this.llenoPorFisioterapia = llenoPorFisioterapia;
+    }
+
+
+    public void setLlenoProfesores(boolean llenoProfesores) {
+        this.llenoProfesores = llenoProfesores;
     }
 
     public void setLlenoClientes(boolean llenoClientes) {

@@ -189,7 +189,7 @@ public class SemanaGenericaActivity extends AppCompatActivity implements EventLi
 
     public class AdaptadorDeEstaActividad extends RecyclerView.Adapter<AdaptadorDeEstaActividad.HolderDeEsto>{
 
-        private final String[] nombreDias ={"Lunes","Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+
         @Override
         public HolderDeEsto onCreateViewHolder(ViewGroup parent, int viewType) {
 

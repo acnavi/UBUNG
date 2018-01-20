@@ -98,6 +98,9 @@
     <string name="db_preferencias_hora_inicio_sab" translatable="false">hora_init_sab</string>
     <string name="db_preferencias_hora_fin_sab" translatable="false">hora_fin_sab</string>
 
+    <!--FireStore-->
+    <string name="db_firestore_semanasActivasDocument" translatable="false">semanas/semanasActivas</string>
+    <string name="db_firestore_semanasActivasCollection" translatable="false">semanas/semanasActivas/semanas</string>
     <!--Basededatos-->
 
     <!--Estados clase clientes-->
